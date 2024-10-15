@@ -1,3 +1,7 @@
+:host {
+    min-height: 68px;
+    display: block;
+}
 @media (min-width: 768px) {
     .panel {
         width: 300px !important;
