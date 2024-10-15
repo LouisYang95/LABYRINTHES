@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+$main-bg-primary: #181A1B;
+$main-bg-secondary: #018060;
+
+.main {
+    background-color: $main-bg-primary;
+}
+.header {
+    background-color: $main-bg-secondary;
+    position: fixed;
+    height: 68px;
+}
+.header .panel {
+    background-color: $main-bg-secondary;
+}

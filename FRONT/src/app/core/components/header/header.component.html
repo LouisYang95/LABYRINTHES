@@ -1,0 +1,10 @@
+<div class="header col-12 p-2">
+    <button class="btn p-1 pb-0" (click)="openMenu()">
+        <mat-icon *ngIf="!flagMenu" class="text-white fs-1 w-100 h-50">menu</mat-icon>
+        <mat-icon *ngIf="flagMenu" class="text-white fs-1 w-100 h-50">close</mat-icon>
+    </button>
+    <div #panel class="panel pt-2">
+        <button class="btn w-100 text-white"><mat-icon class="align-text-bottom me-2">translate</mat-icon>Décodeur</button>
+        <hr class="text-white">
+    </div>
+</div>
