@@ -3,8 +3,14 @@
         <mat-icon *ngIf="!flagMenu" class="text-white fs-1 w-100 h-50">menu</mat-icon>
         <mat-icon *ngIf="flagMenu" class="text-white fs-1 w-100 h-50">close</mat-icon>
     </button>
-    <div #panel class="panel pt-2">
-        <button class="btn w-100 text-white"><mat-icon class="align-text-bottom me-2">translate</mat-icon>Décodeur</button>
+    <div #panel class="panel pt-4 px-3">
+        <a class="btn btn-outline-light w-100 py-3" routerLink="/" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">home</mat-icon>Accueil</a>
+        <hr class="text-white">
+        <a class="btn btn-outline-light w-100 py-3" routerLink="/decodeur" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">translate</mat-icon>Décodeur</a>
+        <hr class="text-white">
+        <a class="btn btn-outline-light w-100 py-3" routerLink="/inventaire" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">account_balance_wallet</mat-icon>Inventaire</a>
+        <hr class="text-white">
+        <a class="btn btn-outline-light w-100 py-3" routerLink="/boutique" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">store</mat-icon>Boutique</a>
         <hr class="text-white">
     </div>
 </div>

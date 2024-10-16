@@ -6,12 +6,14 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { MatIconModule } from '@angular/material/icon'
 import { MainComponent } from './components/main/main.component';
 import { FormsModule } from '@angular/forms'; 
-import { HttpClientModule } from '@angular/common/http';
-
-
-
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { BoutiqueComponent } from './components/boutique/boutique.component';
+import { DecodeurComponent } from './components/decodeur/decodeur.component';
+import { InventaireComponent } from './components/inventaire/inventaire.component';
+import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
+
+LOAD_WASM().subscribe();
 
 @NgModule({
   declarations: [
@@ -19,14 +21,17 @@ import { RegisterComponent } from './register/register.component';
     MainComponent,
     HeaderComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    BoutiqueComponent,
+    DecodeurComponent,
+    InventaireComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatIconModule,
     FormsModule,
-    HttpClientModule
+    NgxScannerQrcodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,34 @@
+<div class="main mb-4 row mx-auto">
+    <div class="bg-main-secondary rounded-2 mt-10 pb-3 col-md-8 mx-md-auto col-12">
+        <div class="row text-white py-3">
+            <div class="col-3 text-center">
+                <mat-icon class="fs-1 w-100 h-100">translate</mat-icon>
+            </div>
+            <h1 class="col-6 text-center">Décodeur</h1>
+            <div class="col-3 text-center">
+                <mat-icon class="fs-1 w-100 h-100">g_translate</mat-icon>
+            </div>
+        </div>
+        <ngx-scanner-qrcode #action="scanner" src="assets/img/Qrcode.png"></ngx-scanner-qrcode>
+
+        <div class="row">
+            <span class="col-4 text-center">{{ action.data.value | json }}</span><!-- value -->
+            <p class="col-4 text-center m-0"><span *ngIf="action.isLoading">⌛Chargement...</span></p>
+            <span class="col-4 text-center">{{ action.data | async | json }}</span><!-- async -->
+            <div class="col-8 row mx-auto mt-3">
+                <!-- start/stop -->
+                <button class="btn mx-auto col-auto" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading" (click)="scan(action, action.isStart ? 'stop' : 'start')">
+                    <img [src]="action.isStart ? 'https://id1945.github.io/images/svg/camera-off.svg' : 'https://id1945.github.io/images/svg/camera-on.svg'"width="30px" />
+                </button>
+                <!-- play/pause -->
+                <button class="btn mx-auto col-auto" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="!action.isStart" (click)="scan(action, action.isPause ? 'play' : 'pause')">
+                    <img [src]="action.isPause ? 'https://id1945.github.io/images/svg/play.svg': 'https://id1945.github.io/images/svg/pause.svg'"width="30px" />
+                </button>
+                <!-- isTorch -->
+                <button class="btn mx-auto col-auto" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="!action.isStart" (click)="action.isTorch = !action.isTorch; scan(action, 'torcher')">
+                    <img [src]="action.isTorch ? 'https://id1945.github.io/images/svg/flash-off.svg' : 'https://id1945.github.io/images/svg/flash-on.svg'"width="30px" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
