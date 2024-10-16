@@ -12,8 +12,6 @@ import { InventaireComponent } from './components/inventaire/inventaire.componen
 const routes: Routes = [
   { path: 'login', component: LoginComponent },    
   { path: 'register', component: RegisterComponent },
-  // Pour toute autre route inconnue, --> vers accueil
-  { path: '**', redirectTo: '' },
   { component: MainComponent, path: "" },
   { component: BoutiqueComponent, path: "boutique" },
   { component: DecodeurComponent, path: "decodeur" },
