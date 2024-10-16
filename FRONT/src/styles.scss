@@ -23,8 +23,13 @@ html, .main {
 }
 .main .bloc {
     background-color: $main-bg-secondary;
-    margin-top: 150px;
     border-radius: 8px;
+}
+.mt-10, .main .bloc {
+    margin-top: 150px !important;
+}
+.bg-main-secondary {
+    background-color: $main-bg-secondary;
 }
 .header .panel {
     background-color: $main-bg-secondary;
