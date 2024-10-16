@@ -6,8 +6,8 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { MatIconModule } from '@angular/material/icon'
 import { MainComponent } from './components/main/main.component';
 import { FormsModule } from '@angular/forms'; 
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 import { BoutiqueComponent } from './components/boutique/boutique.component';
 import { DecodeurComponent } from './components/decodeur/decodeur.component';
 import { InventaireComponent } from './components/inventaire/inventaire.component';
