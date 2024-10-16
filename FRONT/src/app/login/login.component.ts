@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';  // Importer Router
+import { Router } from '@angular/router';  
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   email: string = '';
@@ -44,15 +44,10 @@ onLogin() {
       localStorage.setItem('email', this.email);
       localStorage.setItem('password', this.password);
       localStorage.setItem('rememberMe', 'true');
-    } else {
-      // Sinon, les retirer de localStorage
-      localStorage.removeItem('email');
-      localStorage.removeItem('password');
-      localStorage.removeItem('rememberMe');
-    }
+    } 
 
     // Naviguer vers une autre page après la connexion (exemple : tableau de bord)
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/']);
   } else {
     this.errorMessage = 'Identifiants invalides. Veuillez réessayer.';
   }

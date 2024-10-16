@@ -1,60 +1,56 @@
-<div class="auth-container">
-  <h2>Connexion</h2>
-  <form (ngSubmit)="onLogin()" #loginForm="ngForm">
-
-        <!-- Champ Email -->
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" [(ngModel)]="email" #emailControl="ngModel" required email />
-          <!-- Si l'email est requis mais n'est pas rempli -->
-          <div *ngIf="loginForm.submitted && emailControl.errors?.['required']" class="error-message">
-            L'adresse email est requise.
-          </div>
-          <!-- Si l'email n'est pas au format correct -->
-          <div *ngIf="loginForm.submitted && emailControl.errors?.['email']" class="error-message">
-            Veuillez entrer une adresse email valide (exemple: nom&#64;d.com).
-          </div>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="auth-container col-12 col-sm-8 col-md-6 col-lg-4 p-4 bg-white rounded border border-light shadow">
+    <h2 class="mb-4">Connexion</h2>
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <!-- Champ Email -->
+      <div class="form-group mb-3">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" [(ngModel)]="email" #emailControl="ngModel" required email class="form-control" />
+        <div *ngIf="loginForm.submitted && emailControl.errors?.['required']" class="error-message text-danger">
+          L'adresse email est requise.
         </div>
+        <div *ngIf="loginForm.submitted && emailControl.errors?.['email']" class="error-message text-danger">
+          Veuillez entrer une adresse email valide (exemple: nom&#64;d.com).
+        </div>
+      </div>
 
-
-    <!-- Champ Mot de passe -->
-    <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input type="password" id="password" name="password" [(ngModel)]="password" #passwordControl="ngModel" required minlength="6" />
-      <div *ngIf="loginForm.submitted && passwordControl.errors?.['required']" class="error-message">
-        Le mot de passe est requis.
+      <!-- Champ Mot de passe -->
+      <div class="form-group mb-3">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" #passwordControl="ngModel" required minlength="6" class="form-control" />
+        <div *ngIf="loginForm.submitted && passwordControl.errors?.['required']" class="error-message text-danger">
+          Le mot de passe est requis.
+        </div>
+        <div *ngIf="passwordControl.touched && password.length < 6" class="error-message text-danger">
+          Le mot de passe doit contenir au moins 6 caractères.
+        </div>
+        <div *ngIf="passwordControl.touched && !hasUpperCase(password)" class="error-message text-danger">
+          Le mot de passe doit contenir au moins une majuscule.
+        </div>
+        <div *ngIf="passwordControl.touched && !hasSpecialCharacter(password)" class="error-message text-danger">
+          Le mot de passe doit contenir au moins un caractère spécial.
+        </div>
       </div>
-      <div *ngIf="passwordControl.touched && password.length < 6" class="error-message">
-      </div>
-      <div *ngIf="passwordControl.touched && !hasUpperCase(password)" class="error-message">
-        Le mot de passe doit contenir au moins une majuscule.
-      </div>
-      <div *ngIf="passwordControl.touched && !hasSpecialCharacter(password)" class="error-message">
-        Le mot de passe doit contenir au moins un caractère spécial.
-      </div>
-    </div>
 
       <!-- Option Se souvenir de moi -->
-      <div class="form-group">
+      <div class="form-group mb-3">
         <label>
           <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe" /> Se souvenir de moi
         </label>
       </div>
 
-    <!-- Bouton de soumission -->
-    <button type="submit" class="btn-primary" [disabled]="loginForm.invalid">Connexion</button>
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn btn-success w-100" [disabled]="loginForm.invalid">Connexion</button>
 
-    <p class="switch-link">Pas encore inscrit ? <a routerLink="/register">Inscrivez-vous ici</a></p>
+      <p class="switch-link text-center mt-3">Pas encore inscrit ? <a routerLink="/register">Inscrivez-vous ici</a></p>
 
-    <!-- Message d'erreur général (si la connexion échoue) -->
-    <div *ngIf="errorMessage" class="error-message">
-      <p>{{ errorMessage }}</p>
-    </div>
+      <div *ngIf="errorMessage" class="error-message text-danger">
+        <p>{{ errorMessage }}</p>
+      </div>
 
-    <!-- Message de succès après connexion -->
-    <div *ngIf="successMessage" class="success-message">
-      <p>{{ successMessage }}</p>
-    </div>
-
-  </form>
+      <div *ngIf="successMessage" class="success-message text-success">
+        <p>{{ successMessage }}</p>
+      </div>
+    </form>
+  </div>
 </div>

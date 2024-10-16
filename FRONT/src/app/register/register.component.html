@@ -1,58 +1,47 @@
-<div class="auth-container">
-  <h2>Inscription</h2>
-  <form (ngSubmit)="onRegister()" #registerForm="ngForm">
-    
-    <!-- Champ Nom d'utilisateur -->
-    <div class="form-group">
-      <label for="username">Nom d'utilisateur</label>
-      <input type="text" id="username" name="username" [(ngModel)]="username" required minlength="4" />
-      <div *ngIf="registerForm.submitted && !username" class="error-message">
-        Le nom d'utilisateur est requis.
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="auth-container col-12 col-sm-8 col-md-6 col-lg-4 p-4 bg-white rounded border border-light shadow">
+    <h2 class="mb-4">Inscription</h2>
+    <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+
+      <!-- Champ Nom d'utilisateur -->
+      <div class="form-group mb-3">
+        <label for="username">Nom d'utilisateur</label>
+        <input type="text" id="username" name="username" [(ngModel)]="username" required minlength="4" class="form-control" />
+        <div *ngIf="registerForm.submitted && !username" class="error-message text-danger">
+          Le nom d'utilisateur est requis.
+        </div>
       </div>
-    </div>
 
-    <!-- Champ Email -->
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" [(ngModel)]="email" required />
-      <div *ngIf="registerForm.submitted && !email" class="error-message">
-        L'adresse email est requise.
+      <!-- Champ Email -->
+      <div class="form-group mb-3">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" [(ngModel)]="email" required class="form-control" />
+        <div *ngIf="registerForm.submitted && !email" class="error-message text-danger">
+          L'adresse email est requise.
+        </div>
       </div>
-    </div>
 
-    <!-- Champ Mot de passe -->
-    <div class="form-group">
-      <label for="password">Mot de passe</label>
-      <input type="password" id="password" name="password" [(ngModel)]="password" required minlength="6" />
-      <div *ngIf="registerForm.submitted && !password" class="error-message">
-        Le mot de passe est requis.
+      <!-- Champ Mot de passe -->
+      <div class="form-group mb-3">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required minlength="6" class="form-control" />
+        <div *ngIf="registerForm.submitted && !password" class="error-message text-danger">
+          Le mot de passe est requis.
+        </div>
       </div>
-    </div>
 
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn btn-success w-100" [disabled]="registerForm.invalid">Inscription</button>
 
+      <p class="switch-link text-center mt-3">Déjà inscrit ? <a routerLink="/login">Connectez-vous ici</a></p>
 
-    <!-- Bouton de soumission -->
-    <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Inscription</button>
-
-    <p class="switch-link">Déjà inscrit ? <a routerLink="/login">Connectez-vous ici</a></p>
-
-    <!-- Message d'erreur général (si l'inscription échoue) -->
-    <div *ngIf="errorMessage" class="error-message">
-      <p>{{ errorMessage }}</p>
-    </div>
-
-    <!-- Message d'erreur ou de succès -->
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-  </form>
+      <!-- Message d'erreur ou de succès -->
+      <div *ngIf="errorMessage" class="error-message text-danger">
+        <p>{{ errorMessage }}</p>
+      </div>
+      <div *ngIf="successMessage" class="success-message text-success">
+        <p>{{ successMessage }}</p>
+      </div>
+    </form>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-
