@@ -1,0 +1,60 @@
+<div class="auth-container">
+  <h2>Connexion</h2>
+  <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+
+        <!-- Champ Email -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" [(ngModel)]="email" #emailControl="ngModel" required email />
+          <!-- Si l'email est requis mais n'est pas rempli -->
+          <div *ngIf="loginForm.submitted && emailControl.errors?.['required']" class="error-message">
+            L'adresse email est requise.
+          </div>
+          <!-- Si l'email n'est pas au format correct -->
+          <div *ngIf="loginForm.submitted && emailControl.errors?.['email']" class="error-message">
+            Veuillez entrer une adresse email valide (exemple: nom&#64;d.com).
+          </div>
+        </div>
+
+
+    <!-- Champ Mot de passe -->
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" name="password" [(ngModel)]="password" #passwordControl="ngModel" required minlength="6" />
+      <div *ngIf="loginForm.submitted && passwordControl.errors?.['required']" class="error-message">
+        Le mot de passe est requis.
+      </div>
+      <div *ngIf="passwordControl.touched && password.length < 6" class="error-message">
+      </div>
+      <div *ngIf="passwordControl.touched && !hasUpperCase(password)" class="error-message">
+        Le mot de passe doit contenir au moins une majuscule.
+      </div>
+      <div *ngIf="passwordControl.touched && !hasSpecialCharacter(password)" class="error-message">
+        Le mot de passe doit contenir au moins un caractère spécial.
+      </div>
+    </div>
+
+      <!-- Option Se souvenir de moi -->
+      <div class="form-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe" /> Se souvenir de moi
+        </label>
+      </div>
+
+    <!-- Bouton de soumission -->
+    <button type="submit" class="btn-primary" [disabled]="loginForm.invalid">Connexion</button>
+
+    <p class="switch-link">Pas encore inscrit ? <a routerLink="/register">Inscrivez-vous ici</a></p>
+
+    <!-- Message d'erreur général (si la connexion échoue) -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- Message de succès après connexion -->
+    <div *ngIf="successMessage" class="success-message">
+      <p>{{ successMessage }}</p>
+    </div>
+
+  </form>
+</div>
