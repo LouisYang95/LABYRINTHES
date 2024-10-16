@@ -37,17 +37,12 @@ MarkPosition.init({
     tableName: "mark_positions",
   }
 );
-//
-// MarkPosition.belongsTo(Mark, {
-//     foreignKey: "mark_id",
-//     targetKey: "id"
-// });
-//
-// MarkPosition.belongsTo(
-//     LabyrinthVersion, {
-//       foreignKey: "labyrinth_version_id",
-//       targetKey: "id"
-//     }
-// )
+
+MarkPosition.belongsTo(
+    LabyrinthVersion, {
+      foreignKey: "labyrinth_version_id",
+      targetKey: "id"
+    }
+)
 
 export default MarkPosition;

@@ -33,13 +33,8 @@ MarkInteraction.init(
   }
 );
 
-MarkPosition.belongsTo(User, {
+MarkInteraction.belongsTo(User, {
     foreignKey: "user_id",
-    targetKey: "id",
-})
-
-MarkPosition.belongsTo(Mark, {
-    foreignKey: "mark_id",
     targetKey: "id",
 })
 
