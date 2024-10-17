@@ -1,14 +1,15 @@
 {
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
-    "express": "^4.21.1",
+    "express": "^4.19.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
     "sequelize": "^6.37.4"
   },
-  "name": "back",
+  "name": "labyrinthback",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/app.js",
     "dev": "nodemon src/index.ts"
@@ -18,7 +19,8 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/express": "^5.0.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
