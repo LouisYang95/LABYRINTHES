@@ -15,7 +15,12 @@ export class DecodeurComponent {
       const device = devices.find(f => (/back|rear|environment/gi.test(f.label))); // Default Back Facing Camera
       action.playDevice(device ? device.deviceId : devices[0].deviceId);
     }
-    if (fn === 'start') action[fn](playDeviceFacingBack).subscribe((r: any) => console.log(fn, r), alert);
-    else action[fn]().subscribe((r: any) => console.log(fn, r), alert);
+    if (fn === 'start') action[fn](playDeviceFacingBack).subscribe((r: any) => console.log(fn, r), () => alert("Impossible d'activé la caméra arrière."));
+    else {
+      action[fn]().subscribe((r: any) => console.log(fn, r), (err: string) => {
+        if (fn === 'torcher') alert("Impossible d'activer le flash.");
+        else console.log(err);
+      });
+    }
   }
 }
