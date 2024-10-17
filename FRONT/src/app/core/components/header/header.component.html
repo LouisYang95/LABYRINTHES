@@ -4,13 +4,22 @@
         <mat-icon *ngIf="flagMenu" class="text-white fs-1 w-100 h-50">close</mat-icon>
     </button>
     <div #panel class="panel pt-4 px-3">
+        <div class="row text-center mx-auto text-white">
+            <mat-icon class="col-12 logo-profil w-100 h-100">account_circle</mat-icon>
+            <a *ngIf="!flagConnecter" class="btn btn-outline-light col-12 mt-2" routerLink="/login" (click)="openMenu()"><mat-icon class="align-text-top me-2">subdirectory_arrow_left</mat-icon>Connection</a>
+            <button *ngIf="flagConnecter" class="btn btn-outline-light col-12 mt-2" (click)="deconnection()"><mat-icon class="align-text-top me-2">exit_to_app</mat-icon>Déconnection</button>
+        </div>
+        <hr class="text-white">
         <a class="btn btn-outline-light w-100 py-3" routerLink="/" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">home</mat-icon>Accueil</a>
         <hr class="text-white">
-        <a class="btn btn-outline-light w-100 py-3" routerLink="/decodeur" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">translate</mat-icon>Décodeur</a>
+        <a *ngIf="flagConnecter" class="btn btn-outline-light w-100 py-3" routerLink="/decodeur" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">translate</mat-icon>Décodeur</a>
+        <button *ngIf="!flagConnecter" class="btn btn-outline-light w-100 py-3" (click)="toaster('Décodeur')"><mat-icon class="align-text-bottom me-2">translate</mat-icon>Décodeur</button>
         <hr class="text-white">
-        <a class="btn btn-outline-light w-100 py-3" routerLink="/inventaire" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">account_balance_wallet</mat-icon>Inventaire</a>
+        <a *ngIf="flagConnecter" class="btn btn-outline-light w-100 py-3" routerLink="/inventaire" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">account_balance_wallet</mat-icon>Inventaire</a>
+        <button *ngIf="!flagConnecter" class="btn btn-outline-light w-100 py-3" (click)="toaster('Inventaire')"><mat-icon class="align-text-bottom me-2">account_balance_wallet</mat-icon>Inventaire</button>
         <hr class="text-white">
-        <a class="btn btn-outline-light w-100 py-3" routerLink="/boutique" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">store</mat-icon>Boutique</a>
+        <a *ngIf="flagConnecter" class="btn btn-outline-light w-100 py-3" routerLink="/boutique" (click)="openMenu()"><mat-icon class="align-text-bottom me-2">store</mat-icon>Boutique</a>
+        <button *ngIf="!flagConnecter" class="btn btn-outline-light w-100 py-3" (click)="toaster('Boutique')"><mat-icon class="align-text-bottom me-2">store</mat-icon>Boutique</button>
         <hr class="text-white">
     </div>
 </div>

@@ -9,12 +9,14 @@ $scroll-bar-color: $main-bg-secondary;
 html, .main {
     background-color: $main-bg;
 }
+.loginForm, .main {
+    min-height: calc(100vh - 62px);
+}
 .main {
     background-image: url('assets/img/bg.jpg');
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat;
-    min-height: calc(100vh - 62px);
 }
 .header {
     background-color: $main-bg-secondary;
@@ -49,4 +51,7 @@ html, .main {
 }
 .scroll-bar::-webkit-scrollbar-thumb {
     background: $scroll-bar-color;
+}
+.logo-profil {
+    font-size: 5rem;
 }
