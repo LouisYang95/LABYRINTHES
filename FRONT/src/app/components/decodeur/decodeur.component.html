@@ -9,24 +9,24 @@
                 <mat-icon class="fs-1 w-100 h-100">g_translate</mat-icon>
             </div>
         </div>
-        <ngx-scanner-qrcode #action="scanner" src="assets/img/Qrcode.png"></ngx-scanner-qrcode>
+        <ngx-scanner-qrcode #action="scanner" src="assets/img/Qrcode.png" [fps]="60" [vibrate]="1000" [isBeep]="false"></ngx-scanner-qrcode>
 
         <div class="row">
-            <span class="col-4 text-center">{{ action.data.value | json }}</span><!-- value -->
-            <p class="col-4 text-center m-0"><span *ngIf="action.isLoading">⌛Chargement...</span></p>
-            <span class="col-4 text-center">{{ action.data | async | json }}</span><!-- async -->
+            <span *ngIf="!action.isLoading && !action.data.value[0]?.value"></span>
+            <span *ngIf="action.data.value[0]?.value" class="col-12 text-center">Message décrypté : {{ action.data.value[0].value }}</span><!-- value -->
+            <span *ngIf="action.isLoading" class="col-12 text-center">⌛Chargement...</span>
             <div class="col-8 row mx-auto mt-3">
                 <!-- start/stop -->
                 <button class="btn mx-auto col-auto" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="action.isLoading" (click)="scan(action, action.isStart ? 'stop' : 'start')">
-                    <img [src]="action.isStart ? 'https://id1945.github.io/images/svg/camera-off.svg' : 'https://id1945.github.io/images/svg/camera-on.svg'"width="30px" />
+                    <img [src]="action.isStart ? 'assets/img/camera-off.svg' : 'assets/img/camera-on.svg'"width="30px" />
                 </button>
                 <!-- play/pause -->
                 <button class="btn mx-auto col-auto" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="!action.isStart" (click)="scan(action, action.isPause ? 'play' : 'pause')">
-                    <img [src]="action.isPause ? 'https://id1945.github.io/images/svg/play.svg': 'https://id1945.github.io/images/svg/pause.svg'"width="30px" />
+                    <img [src]="action.isPause ? 'assets/img/play.svg': 'assets/img/pause.svg'"width="30px" />
                 </button>
                 <!-- isTorch -->
                 <button class="btn mx-auto col-auto" [class.btn-info]="!action.isStart" [class.btn-warning]="action.isStart" [disabled]="!action.isStart" (click)="action.isTorch = !action.isTorch; scan(action, 'torcher')">
-                    <img [src]="action.isTorch ? 'https://id1945.github.io/images/svg/flash-off.svg' : 'https://id1945.github.io/images/svg/flash-on.svg'"width="30px" />
+                    <img [src]="action.isTorch ? 'assets/img/flash-off.svg' : 'assets/img/flash-on.svg'"width="30px" />
                 </button>
             </div>
         </div>
