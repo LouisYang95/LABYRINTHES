@@ -1,21 +1,25 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   @ViewChild('panel') panel!: any;
   flagMenu = false;
   flagConnecter = false;
   
-  constructor(private toast: ToastrService, private rooter: Router) {}
+  constructor(private toast: ToastrService, private rooter: Router, private cookieService: CookieService) {}
 
+  ngOnInit(): void {
+    if (this.cookieService.get("email") != undefined) this.flagConnecter = true;
+  }
   openMenu(): void {
-    if (sessionStorage.getItem("email") != null || sessionStorage.getItem("password") != null)  this.flagConnecter = true;
+    if (this.cookieService.get("email") != undefined || sessionStorage.getItem("email") != null) this.flagConnecter = true;
     else this.flagConnecter = false;
     if (this.flagMenu) this.panel.nativeElement.classList.remove('open');
     else this.panel.nativeElement.classList.add('open');
@@ -26,6 +30,7 @@ export class HeaderComponent {
   }
   deconnection(): void {
     sessionStorage.clear();
+    this.cookieService.removeAll();
     this.flagConnecter = false;
     this.rooter.navigateByUrl('/');
   }
