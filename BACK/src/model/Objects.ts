@@ -17,9 +17,9 @@ Objects.init({
         type: DataTypes.ENUM('good', 'bad'),
         allowNull: false,
     },
-    price:{
-        type: DataTypes.INTEGER,
-        allowNull: false
+    image:{
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     sequelize,
