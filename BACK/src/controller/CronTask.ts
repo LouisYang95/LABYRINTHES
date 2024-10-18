@@ -3,7 +3,7 @@ import LabyrinthVersion from "../model/LabyrinthVersion";
 var cron = require("node-cron")
 
 const scheduleDailySeed = () => {
-    cron.schedule("0 0 0 * * *", async () => {
+    cron.schedule("*/5 * * * *", async () => {
         try {
 
             let newSeed;
