@@ -13,7 +13,6 @@
           Veuillez entrer une adresse email valide (exemple: nom&#64;d.com).
         </div>
       </div>
-
       <!-- Champ Mot de passe -->
       <div class="form-group mb-3">
         <label for="password" class="mb-1">Mot de passe</label>
@@ -28,25 +27,17 @@
           Le mot de passe doit contenir au moins un caractère spécial.
         </div>
       </div>
-
       <!-- Option Se souvenir de moi -->
       <div class="form-group mb-3">
         <label>
           <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe" /> Se souvenir de moi
         </label>
       </div>
-
       <!-- Bouton de soumission -->
       <button type="submit" class="btn btn-success w-100" [disabled]="loginForm.invalid">Connexion</button>
-
       <p class="switch-link text-center mt-3">Pas encore inscrit ? <a routerLink="/register">Inscrivez-vous ici</a></p>
-
       <div *ngIf="errorMessage" class="error-message text-danger">
         <p>{{ errorMessage }}</p>
-      </div>
-
-      <div *ngIf="successMessage" class="success-message text-success">
-        <p>{{ successMessage }}</p>
       </div>
     </form>
   </div>

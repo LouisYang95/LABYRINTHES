@@ -7,12 +7,12 @@ import { Component } from '@angular/core';
 })
 
 export class CompteComponent {
-
-  playerName: string = 'Abed'; 
-  playerPseudo: string = 'AK47'; 
-  playerXP: number = 50; 
-  playerLikes: number = 50; 
-  playerDislikes: number = 10;
+  playerName = 'Abed'; 
+  playerPseudo = 'AK47'; 
+  playerXP = 50; 
+  playerLikes = 50; 
+  playerDislikes = 10;
+  inventaireSize = 50;
 
   constructor() {}
 
