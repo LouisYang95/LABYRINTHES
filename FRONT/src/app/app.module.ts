@@ -15,6 +15,7 @@ import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CookieModule } from 'ngx-cookie';
 
 LOAD_WASM().subscribe();
 
@@ -37,7 +38,8 @@ LOAD_WASM().subscribe();
     NgxScannerQrcodeModule,
     CommonModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    CookieModule.withOptions()
   ],
   providers: [],
   bootstrap: [AppComponent]
