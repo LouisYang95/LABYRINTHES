@@ -2,37 +2,32 @@
     <div class="col-12 pt-5">
         <img src="assets/img/logo.png" alt="logo" class="col-6 col-md-3 logo mx-auto d-block">
     </div>
-
     <!-- Compte à rebours -->
     <div class="text-center">
-        <h2 style="color: #ffcc00;">Compte à rebours du Labyrinthe</h2> 
-        <h3 style="color: #ff3300;">{{ minutes }}:{{ seconds | number: '2.0' }}</h3> 
+        <h2 class="text-warning">Compte à rebours du Labyrinthe</h2>
+        <h3 class="text-danger">{{ minutes }}:{{ seconds | number: '2.0' }}</h3>
         <button class="btn btn-warning mt-3" (click)="resetCountdown()">Reset Labyrinthe</button>
     </div>
-
-    <!-- Classement des gagnants -->
-    <div class="text-center mt-5">
-        <h2 style="color: #00cc66;">Classement des Winners</h2> 
-        <table class="table table-striped table-dark mt-3">
-            <thead>
-                <tr style="background-color: #00cc25;"> 
-                    <th>Nom</th>
-                    <th>Temps</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let winner of winners">
-                    <td>{{ winner.name }}</td>
-                    <td>{{ winner.time }}</td>
-                    <td>{{ winner.score }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="bloc col-md-8 mx-md-auto col-12">
-        <h1 style="color: #ff9900;">test</h1> 
-       
+    <div class="bloc col-md-8 mt-5 p-0 mx-md-auto col-12">
+        <!-- Classement des gagnants -->
+        <div class="text-warning">
+            <h2 class="mt-2 text-center">Classement des Winners</h2>
+            <table class="table table-striped table-dark mt-3">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Temps</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let winner of winners">
+                        <td>{{ winner.name }}</td>
+                        <td>{{ winner.time }}</td>
+                        <td>{{ winner.score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
