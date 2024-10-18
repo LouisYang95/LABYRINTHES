@@ -12,7 +12,15 @@ export const getMarksByLabyrinthId = async (req: Request, res: Response) => {
         const marks = await Mark.findAll({
             where: {
                 labyrinth_version_id: labyrinth_version_id
-            }
+            },
+            include: [
+                {
+                    model: MarkPosition
+                },
+                {
+                    model: markInteraction
+                }
+                ]
         });
 
         if (!marks.length) {
@@ -102,3 +110,39 @@ export const createMark = async (req: Request, res: Response) => {
         return res.status(500).json({ message: "Erreur lors de la création de la marque." });
     }
 };
+
+export const newInteractionForMark = async (req: Request, res: Response) => {
+    const { mark_id, user_id, interaction } = req.body;
+
+    try {
+        const mark = await Mark.findByPk(mark_id);
+        if (!mark) {
+            return res.status(404).json({ message: 'Marque non trouvée.' });
+        }
+
+        const user = await User.findByPk(user_id);
+        if (!user) {
+            return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+        }
+
+        if(!interaction || (interaction !== 'like' && interaction !== 'dislike')) {
+            return res.status(400).json({ message: 'Veuillez renseigner une interaction valide.' });
+        }
+
+        const newInteraction = await markInteraction.create({
+            mark_id,
+            user_id,
+            interaction
+        });
+
+        if (!newInteraction) {
+            return res.status(500).json({ message: 'Erreur lors de la création de l\'interaction.' });
+        }
+
+        return res.status(201).json({ message: "Interaction created", interaction: newInteraction });
+
+    } catch (error) {
+        console.error('Erreur lors de la création de l\'interaction:', error);
+        return res.status(500).json({ message: "Erreur lors de la création de l\'interaction." });
+    }
+}
