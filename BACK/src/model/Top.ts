@@ -17,10 +17,6 @@ Top.init({
     timer: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
-    number: {
-        type: DataTypes.INTEGER,
-        allowNull: false
     }
 }, {
     sequelize,
