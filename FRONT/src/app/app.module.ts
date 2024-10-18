@@ -10,11 +10,12 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { BoutiqueComponent } from './components/boutique/boutique.component';
 import { DecodeurComponent } from './components/decodeur/decodeur.component';
-import { InventaireComponent } from './components/inventaire/inventaire.component';
+import { CompteComponent } from './components/compte/compte.component';
 import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CookieModule } from 'ngx-cookie';
 
 LOAD_WASM().subscribe();
 
@@ -27,7 +28,7 @@ LOAD_WASM().subscribe();
     RegisterComponent,
     BoutiqueComponent,
     DecodeurComponent,
-    InventaireComponent
+    CompteComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +38,8 @@ LOAD_WASM().subscribe();
     NgxScannerQrcodeModule,
     CommonModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    CookieModule.withOptions()
   ],
   providers: [],
   bootstrap: [AppComponent]
