@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -12,19 +13,17 @@ export class LoginComponent {
   password: string = '';
   rememberMe: boolean = false;
   errorMessage: string = '';
-  successMessage: string = '';
 
   // Injecter Router dans le constructeur
-  constructor(private router: Router, private cookieService: CookieService) { }
+  constructor(private router: Router, private toast: ToastrService, private cookieService: CookieService) { }
 
   onLogin() {
     // Réinitialiser les messages
     this.errorMessage = '';
-    this.successMessage = '';
 
     // Simuler une connexion réussie
     if (this.email === 'test@example.com' && this.password === 'Password1!') {
-      this.successMessage = 'Connexion réussie !';
+      this.toast.success("Connection établie avec succès", "Authentification réussi");
       // Sauvegarder les informations si "Se souvenir de moi" est coché
       sessionStorage.setItem('email', this.email);
       sessionStorage.setItem('password', this.password);
