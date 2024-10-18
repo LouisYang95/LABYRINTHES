@@ -44,4 +44,4 @@ const scheduleDailySeed = () => {
     });
 }
 
-export default scheduleDailySeed;
+export default scheduleDailySeed
