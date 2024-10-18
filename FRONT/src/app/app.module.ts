@@ -10,7 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { BoutiqueComponent } from './components/boutique/boutique.component';
 import { DecodeurComponent } from './components/decodeur/decodeur.component';
-import { InventaireComponent } from './components/inventaire/inventaire.component';
+import { CompteComponent } from './components/compte/compte.component';
 import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 
 LOAD_WASM().subscribe();
@@ -24,7 +24,7 @@ LOAD_WASM().subscribe();
     RegisterComponent,
     BoutiqueComponent,
     DecodeurComponent,
-    InventaireComponent
+    CompteComponent
   ],
   imports: [
     BrowserModule,
