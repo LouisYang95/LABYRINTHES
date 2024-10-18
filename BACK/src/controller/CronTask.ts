@@ -5,7 +5,7 @@ import cron from "node-cron";
 const scheduleDailySeed = () => {
     console.log("Cron job is scheduled");
 
-    cron.schedule("* * * * *", async () => {
+    cron.schedule("0 * * * *", async () => {
         try {
             console.log("Cron task started");
             let newSeed;
