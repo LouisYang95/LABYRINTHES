@@ -7,7 +7,7 @@ export const App = express();
 
 App.use(express.json());
 
-App.use('/users', userRoutes);
+App.use('/user', userRoutes);
 App.use('/auth', authRoutes);
 
 scheduleDailySeed()
