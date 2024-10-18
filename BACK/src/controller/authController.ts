@@ -4,10 +4,8 @@ import bcrypt from "bcrypt";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
-        console.log(req.body);
         const { username, password } = req.body;
 
-        // Vérifier si l'utilisateur existe déjà
         const existingUser = await User.findOne({ where: { username } });
         if (existingUser) {
             return res.status(400).json({ message: "Username already exists." });
