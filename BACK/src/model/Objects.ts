@@ -16,6 +16,10 @@ Objects.init({
     type: {
         type: DataTypes.ENUM('good', 'bad'),
         allowNull: false,
+    },
+    image:{
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     sequelize,
