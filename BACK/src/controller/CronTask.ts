@@ -1,5 +1,6 @@
 import LabyrinthVersion from "../model/LabyrinthVersion";
-import cron from "node-cron";
+
+var cron = require("node-cron");
 
 const scheduleDailySeed = () => {
     console.log("Cron job is scheduled");
