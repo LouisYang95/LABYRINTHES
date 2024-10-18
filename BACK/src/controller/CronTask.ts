@@ -1,6 +1,6 @@
 import LabyrinthVersion from "../model/LabyrinthVersion";
 
-var cron = require("node-cron");
+import cron from "node-cron";
 
 const scheduleDailySeed = () => {
     console.log("Cron job is scheduled");
@@ -27,7 +27,6 @@ const scheduleDailySeed = () => {
 
             if (updateResult[0] === 0) {
                 console.error("Aucune version active trouvée.");
-                return { status: 404, message: "Aucune version active trouvée." };
             }
 
             const newVersion = await LabyrinthVersion.create({
