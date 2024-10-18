@@ -12,6 +12,9 @@ import { BoutiqueComponent } from './components/boutique/boutique.component';
 import { DecodeurComponent } from './components/decodeur/decodeur.component';
 import { CompteComponent } from './components/compte/compte.component';
 import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
+import { CommonModule } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 LOAD_WASM().subscribe();
 
@@ -31,7 +34,10 @@ LOAD_WASM().subscribe();
     AppRoutingModule,
     MatIconModule,
     FormsModule,
-    NgxScannerQrcodeModule
+    NgxScannerQrcodeModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

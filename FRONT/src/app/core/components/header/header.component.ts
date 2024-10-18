@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -9,30 +10,23 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   @ViewChild('panel') panel!: any;
   flagMenu = false;
+  flagConnecter = false;
   
-  // Variable pour suivre l'état de connexion
-  isLoggedIn = false;
-
-  constructor(private router: Router) {}
+  constructor(private toast: ToastrService, private rooter: Router) {}
 
   openMenu(): void {
-    if (this.flagMenu) {
-      this.panel.nativeElement.classList.remove('open');
-    } else {
-      this.panel.nativeElement.classList.add('open');
-    }
+    if (sessionStorage.getItem("email") != null || sessionStorage.getItem("password") != null)  this.flagConnecter = true;
+    else this.flagConnecter = false;
+    if (this.flagMenu) this.panel.nativeElement.classList.remove('open');
+    else this.panel.nativeElement.classList.add('open');
     this.flagMenu = !this.flagMenu;
   }
-
-  // Méthode pour gérer la déconnexion
-  logout(): void {
-    this.isLoggedIn = false; // Change l'état à déconnecté
-    console.log('Utilisateur déconnecté');
-    this.router.navigate(['/']); // Redirige vers l'accueil après déconnexion
+  toaster(destination: string): void {
+    this.toast.error(`Veuillez vous connecter pour accéder à la page ${destination} !`, "Authentification requise")
   }
-
-  // Simuler une connexion (peut être lié à un service d'authentification)
-  login(): void {
-    this.isLoggedIn = true; // Change l'état à connecté
+  deconnection(): void {
+    sessionStorage.clear();
+    this.flagConnecter = false;
+    this.rooter.navigateByUrl('/');
   }
 }

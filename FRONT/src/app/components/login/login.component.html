@@ -1,10 +1,10 @@
-<div class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="auth-container col-12 col-sm-8 col-md-6 col-lg-4 p-4 bg-white rounded border border-light shadow">
+<div class="container d-flex justify-content-center align-items-center loginForm">
+  <div class="auth-container col-12 col-sm-8 col-md-6 col-lg-5 p-4 bg-white rounded border border-light shadow">
     <h2 class="mb-4">Connexion</h2>
     <form (ngSubmit)="onLogin()" #loginForm="ngForm">
       <!-- Champ Email -->
       <div class="form-group mb-3">
-        <label for="email">Email</label>
+        <label for="email" class="mb-1">Email</label>
         <input type="email" id="email" name="email" [(ngModel)]="email" #emailControl="ngModel" required email class="form-control" />
         <div *ngIf="loginForm.submitted && emailControl.errors?.['required']" class="error-message text-danger">
           L'adresse email est requise.
@@ -16,18 +16,15 @@
 
       <!-- Champ Mot de passe -->
       <div class="form-group mb-3">
-        <label for="password">Mot de passe</label>
+        <label for="password" class="mb-1">Mot de passe</label>
         <input type="password" id="password" name="password" [(ngModel)]="password" #passwordControl="ngModel" required minlength="6" class="form-control" />
-        <div *ngIf="loginForm.submitted && passwordControl.errors?.['required']" class="error-message text-danger">
-          Le mot de passe est requis.
-        </div>
-        <div *ngIf="passwordControl.touched && password.length < 6" class="error-message text-danger">
+        <div *ngIf="passwordControl.touched && password.length < 6" class="error-message text-danger mt-2">
           Le mot de passe doit contenir au moins 6 caractères.
         </div>
-        <div *ngIf="passwordControl.touched && !hasUpperCase(password)" class="error-message text-danger">
+        <div *ngIf="passwordControl.touched && !hasUpperCase(password)" class="error-message text-danger mt-2">
           Le mot de passe doit contenir au moins une majuscule.
         </div>
-        <div *ngIf="passwordControl.touched && !hasSpecialCharacter(password)" class="error-message text-danger">
+        <div *ngIf="passwordControl.touched && !hasSpecialCharacter(password)" class="error-message text-danger mt-2">
           Le mot de passe doit contenir au moins un caractère spécial.
         </div>
       </div>
