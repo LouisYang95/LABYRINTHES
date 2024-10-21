@@ -46,12 +46,12 @@ html, .main {
     background-color: $main-bg;
 }
 .loginForm, .main {
-    min-height: calc(100vh - 62px);
+    min-height: calc(100vh - 90px);
 }
 .main {
     background-image: url('assets/img/bg.jpg');
     background-position: top;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
 }
 .header {
@@ -64,8 +64,17 @@ html, .main {
     background-color: $main-bg-secondary;
     border-radius: 8px;
 }
+.inventaire-case {
+    height: 100px;
+    border: 1px solid black;
+}
+@media (min-width: 768px) {
+    .sous-menu {
+        max-height: calc(100vh - 350px);
+    }
+}
 .mt-10 {
-    margin-top: 150px !important;
+    margin-top: 130px !important;
 }
 .bg-main-secondary {
     background-color: $main-bg-secondary;
