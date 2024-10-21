@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
     sessionStorage.clear();
     this.cookieService.removeAll();
     this.flagConnecter = false;
+    this.toast.info("Vous avez été déconnecter.", "Déconnection");
     this.rooter.navigateByUrl('/');
   }
 }
