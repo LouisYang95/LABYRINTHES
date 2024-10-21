@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieModule } from 'ngx-cookie';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 LOAD_WASM().subscribe();
 
@@ -39,9 +40,12 @@ LOAD_WASM().subscribe();
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    CookieModule.withOptions()
+    CookieModule.withOptions(),
+    MatSidenavModule
+   
+    
   ],
-  providers: [],
+  providers: [  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
