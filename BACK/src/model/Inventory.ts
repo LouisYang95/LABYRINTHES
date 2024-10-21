@@ -2,7 +2,12 @@ import {DataTypes, Model} from "sequelize";
 import sequelize from "../config/database";
 import User from "./User";
 
-class Inventory extends Model {}
+class Inventory extends Model {
+    public id!: number;
+    public user_id!: number;
+    public object_id!: number;
+    public labyrinth_version_id!: number;
+}
 
 Inventory.init({
     id: {
