@@ -25,11 +25,11 @@ export class LoginComponent {
     if (this.email === 'test@example.com' && this.password === 'Password1!') {
       this.successMessage = 'Connexion réussie !';
 
-      // Sauvegarder les informations si "Se souvenir de moi" est coché
+      // Sauvegarder les informations 
       sessionStorage.setItem('email', this.email);
       sessionStorage.setItem('password', this.password);
 
-      // Naviguer vers une autre page après la connexion (exemple : tableau de bord)
+      // Naviguation 
       this.router.navigate(['/']);
     } else this.errorMessage = 'Identifiants invalides. Veuillez réessayer.';
   }

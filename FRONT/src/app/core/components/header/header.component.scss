@@ -1,21 +1,21 @@
 :host {
-    min-height: 62px;
-    display: block;
+  min-height: 62px;
+  display: block;
 }
 @media (min-width: 768px) {
-    .panel {
-        width: 300px !important;
-    }
+  .panel {
+      width: 300px !important;
+  }
 }
 .panel {
-    position: absolute;
-    left: 0;
-    height: 100vh;
-    width: 100%;
+  position: absolute;
+  left: 0;
+  height: 100vh;
+  width: 100%;
 }
 .panel.open {
-    display: block;
+  display: block;
 }
 .panel:not(.open) {
-    display: none;
+  display: none;
 }
