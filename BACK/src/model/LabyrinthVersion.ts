@@ -1,7 +1,11 @@
 import {DataTypes, Model} from "sequelize";
 import sequelize from "../config/database";
 
-class LabyrinthVersion extends Model {}
+class LabyrinthVersion extends Model {
+    public id!: number;
+    public seed!: number;
+    public is_active!: boolean;
+}
 
 LabyrinthVersion.init({
     id: {
