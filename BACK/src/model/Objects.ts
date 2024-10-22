@@ -1,7 +1,13 @@
 import {DataTypes, Model} from "sequelize";
 import sequelize from "../config/database";
 
-class Objects extends Model {}
+class Objects extends Model {
+    public id!: number;
+    public name!: string;
+    public type!: string;
+    public price!: number;
+    public description!: string;
+}
 
 Objects.init({
     id: {
@@ -17,9 +23,13 @@ Objects.init({
         type: DataTypes.ENUM('good', 'bad'),
         allowNull: false,
     },
-    image:{
+    price:{
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    description: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     }
 }, {
     sequelize,

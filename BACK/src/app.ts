@@ -1,4 +1,5 @@
 import express from 'express';
+import swaggerDocs from "./swagger";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
 import scheduleDailySeed from "./controller/CronTask"
@@ -17,3 +18,5 @@ App.use('/top', topRoutes);
 App.use('/seed',seedRoutes);
 
 scheduleDailySeed()
+
+swaggerDocs(App);
