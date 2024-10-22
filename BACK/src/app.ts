@@ -7,6 +7,7 @@ import scheduleDailySeed from "./controller/CronTask"
 import markRoutes from "./routes/markRoutes";
 import topRoutes from "./routes/topRoutes";
 import seedRoutes from "./routes/labyrinthRoute";
+import trapRoutes from "./routes/trapRoutes";
 
 export const App = express();
 
@@ -18,6 +19,7 @@ App.use('/auth', authRoutes);
 App.use('/shop', shopRoutes);
 App.use('/top', topRoutes);
 App.use('/seed',seedRoutes);
+App.use('/trap', trapRoutes);
 
 scheduleDailySeed()
 
