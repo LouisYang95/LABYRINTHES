@@ -3,8 +3,7 @@ import { App } from './app';
 import { Express } from "express";
 
 syncModels().then(() => {
-    // const hostname = "0.0.0.0";
-    const hostname = "127.0.0.1";
+    const hostname = "0.0.0.0";
     const port = 3000;
     const app: Express = App;
 
