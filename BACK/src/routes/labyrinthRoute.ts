@@ -11,7 +11,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /:
+ * /seed:
  *   get:
  *     summary: Récupérer le seed de la version du labyrinthe
  *     description: Cette route permet de récupérer le seed de la version actuelle du labyrinthe.
