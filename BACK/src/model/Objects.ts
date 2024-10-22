@@ -23,8 +23,8 @@ Objects.init({
         type: DataTypes.ENUM('good', 'bad'),
         allowNull: false,
     },
-    image:{
-        type: DataTypes.STRING,
+    price:{
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     description: {
