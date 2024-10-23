@@ -103,6 +103,6 @@ const router = express.Router();
 
 router.get("/", getAllObjects);
 router.get("/object/:id", getObjectById);
-router.get("/buy/:user_id/:object_id", buyObject);
+router.post("/buy/:user_id/:object_id", buyObject);
 
 export default router;
