@@ -53,6 +53,7 @@ export const login = async (req: Request, res: Response) => {
         }
 
         const userInfo = {
+            id: user.get("id"),
             username : user.get("username"),
             good_points: user.get("good_points"),
             bad_points: user.get("bad_points"),
