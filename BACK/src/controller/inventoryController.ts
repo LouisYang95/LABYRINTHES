@@ -19,3 +19,22 @@ export const getInventory = async (req: Request, res: Response) => {
         return res.status(500).json({error: error})
     }
 }
+
+export const useObject = async (req: Request, res: Response) => {
+    try {
+        const { user_id, inventory_id } = req.params;
+
+        const inventory = await Inventory.findOne({ where: { user_id, id: inventory_id } })
+
+        if (!inventory) {
+            return res.status(404).json({ error: "Inventory item not found or user not authorized." });
+        }
+
+        await Inventory.destroy({ where: { user_id, id: inventory_id } });
+
+        return res.status(200).json({ message: "Inventory item used and removed successfully.", inventory });
+
+    } catch (error) {
+        return res.status(500).json({error: error});
+    }
+}
