@@ -1,6 +1,7 @@
 import {DataTypes, Model} from "sequelize";
 import sequelize from "../config/database";
 import User from "./User";
+import Objects from "./Objects";
 
 class Inventory extends Model {
     public id!: number;
@@ -38,4 +39,8 @@ Inventory.belongsTo(User, {
     targetKey: "id"
 })
 
+Inventory.belongsTo(Objects, {
+    foreignKey: "object_id",
+    targetKey: "id"
+})
 export default Inventory;

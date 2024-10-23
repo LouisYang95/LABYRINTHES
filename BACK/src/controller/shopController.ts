@@ -55,11 +55,11 @@ export const buyObject = async (req: CustomRequest, res: Response) => {
             where: { object_id: object_id }
         });
 
-        if (!marketplaceEntry) {
-            return res.status(404).json({ message: 'Objet non trouvé dans le marketplace' });
-        }
+        const shopPrice = await Objects.findOne({
+            where: { id: object_id }
+        });
 
-        const objectPrice = marketplaceEntry.get('price') as number;
+        const objectPrice = shopPrice!.get('price') as number;
         const objectType = object.get('type');
 
         if (objectType === 'good') {
@@ -90,6 +90,11 @@ export const buyObject = async (req: CustomRequest, res: Response) => {
             return res.status(404).json({ message: 'No active labyrinth version found' });
         }
 
+        await Marketplace.create({
+            user_id: user.id,
+            object_id: object.id,
+            price: objectPrice,
+        })
 
         await Inventory.create({
             user_id: user_id,
