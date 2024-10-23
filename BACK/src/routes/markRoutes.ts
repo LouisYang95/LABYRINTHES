@@ -12,7 +12,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /mark/{labyrinth_version_id}/{labyrinth_level_id}:
+ * /mark/{labyrinth_version_id}/{labyrinth_level}:
  *   get:
  *     summary: Récupérer toutes les marques d'un niveau de labyrinthe
  *     description: Cette route permet de récupérer toutes les marques pour une version et un niveau spécifique du labyrinthe.
@@ -25,11 +25,11 @@ const router = express.Router();
  *           type: integer
  *         description: ID de la version du labyrinthe
  *       - in: path
- *         name: labyrinth_level_id
+ *         name: labyrinth_level
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID du niveau du labyrinthe
+ *         description: Niveau du labyrinthe
  *     responses:
  *       200:
  *         description: Marques récupérées avec succès
@@ -57,6 +57,8 @@ const router = express.Router();
  *                         type: integer
  *       404:
  *         description: Aucune marque trouvée pour ce labyrinthe et niveau
+ *       500:
+ *         description: Erreur serveur lors de la récupération des marques
  */
 
 /**
@@ -75,7 +77,7 @@ const router = express.Router();
  *             required:
  *               - user_id
  *               - labyrinth_version_id
- *               - labyrinth_level_id
+ *               - labyrinth_level
  *               - text
  *               - position_x
  *               - position_y
@@ -85,7 +87,7 @@ const router = express.Router();
  *                 type: integer
  *               labyrinth_version_id:
  *                 type: integer
- *               labyrinth_level_id:
+ *               labyrinth_level:
  *                 type: integer
  *               text:
  *                 type: string
@@ -98,8 +100,37 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: Marque créée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Mark a été créé"
+ *                 mark:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     text:
+ *                       type: string
+ *                     user_id:
+ *                       type: integer
+ *                     labyrinth_version_id:
+ *                       type: integer
+ *                     labyrinth_level_id:
+ *                       type: integer
+ *                     position_x:
+ *                       type: integer
+ *                     position_y:
+ *                       type: integer
+ *                     position_z:
+ *                       type: integer
  *       400:
  *         description: Mauvaise requête
+ *       500:
+ *         description: Erreur serveur lors de la création de la marque
  */
 
 /**
@@ -134,11 +165,12 @@ const router = express.Router();
  *         description: Mauvaise requête
  *       404:
  *         description: Marque non trouvée
+ *       500:
+ *         description: Erreur serveur lors de l'ajout de l'interaction
  */
 
-router.get('/:labyrinth_version_id/:labyrinth_level_id', getMarksByLabyrinthId);
+router.get('/:labyrinth_version_id/:labyrinth_level', getMarksByLabyrinthId);
 router.post('/create', createMark);
 router.post('/interaction', newInteractionForMark);
 
 export default router;
-
