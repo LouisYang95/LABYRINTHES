@@ -26,6 +26,7 @@ const router = express.Router();
  *             required:
  *               - object_id
  *               - labyrinth_version_id
+ *               - labyrinth_level
  *               - position_x
  *               - position_y
  *               - position_z
@@ -36,6 +37,9 @@ const router = express.Router();
  *               labyrinth_version_id:
  *                 type: integer
  *                 description: ID de la version du labyrinthe
+ *               labyrinth_level:
+ *                 type: integer
+ *                 description: Niveau du labyrinthe
  *               position_x:
  *                 type: integer
  *                 description: Position X du piège
@@ -64,6 +68,8 @@ const router = express.Router();
  *                     object_id:
  *                       type: integer
  *                     labyrinth_version_id:
+ *                       type: integer
+ *                     labyrinth_level_id:
  *                       type: integer
  *                     position_x:
  *                       type: integer
@@ -112,10 +118,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /trap/{labyrinth_version_id}:
+ * /trap/{labyrinth_version_id}/{labyrinth_level}:
  *   get:
  *     summary: Récupérer tous les pièges d'un labyrinthe
- *     description: Récupérer la liste de tous les pièges d'une version spécifique du labyrinthe.
+ *     description: Récupérer la liste de tous les pièges pour un niveau spécifique d'une version du labyrinthe.
  *     tags: [Trap]
  *     parameters:
  *       - in: path
@@ -124,6 +130,12 @@ const router = express.Router();
  *         schema:
  *           type: integer
  *         description: ID de la version du labyrinthe
+ *       - in: path
+ *         name: labyrinth_level
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Niveau du labyrinthe
  *     responses:
  *       200:
  *         description: Pièges récupérés avec succès
@@ -137,6 +149,10 @@ const router = express.Router();
  *                   id:
  *                     type: integer
  *                   object_id:
+ *                     type: integer
+ *                   labyrinth_version_id:
+ *                     type: integer
+ *                   labyrinth_level_id:
  *                     type: integer
  *                   position_x:
  *                     type: integer
@@ -154,6 +170,6 @@ const router = express.Router();
 
 router.post("/create", createTrap);
 router.delete("/:id", deleteTrap);
-router.get("/:labyrinth_version_id", getAllTrapsForLabyrinth);
+router.get("/:labyrinth_version_id/:labyrinth_level", getAllTrapsForLabyrinth);
 
 export default router;
