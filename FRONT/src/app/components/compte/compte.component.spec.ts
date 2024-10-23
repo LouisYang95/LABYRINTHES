@@ -1,23 +1,31 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
 
-import { CompteComponent} from './compte.component';
+// Définition de l'interface Labyrinthe
+interface Labyrinthe {
+  id: number;
+  name: string;
+  likes: number;
+  dislikes: number;
+}
 
-describe('CompteComponent', () => {
-  let component: CompteComponent;
-  let fixture: ComponentFixture<CompteComponent>;
+@Component({
+  selector: 'app-compte',
+  templateUrl: './compte.component.html',
+  styleUrls: ['./compte.component.scss']
+})
+export class CompteComponent {
+  playerName = 'Abed'; 
+  playerPseudo = 'AK47'; 
+  playerXP = 50; 
+  inventaireSize = 50;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CompteComponent]
-    })
-    .compileComponents();
+  // Définir le labyrinthe actuel
+  currentLabyrinthe: Labyrinthe = {
+    id: 1,
+    name: 'Premier Labyrinthe',
+    likes: 100,       
+    dislikes: 20     
+  };
 
-    fixture = TestBed.createComponent(CompteComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+  constructor() {}
+}

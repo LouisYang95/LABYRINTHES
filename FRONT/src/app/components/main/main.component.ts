@@ -19,6 +19,7 @@ export class MainComponent implements OnInit, OnDestroy {
   minutes: number = 5; 
   seconds: number = 0;
   countdownInterval: any;
+  targetTime: Date;
 
 
    // Liste des winners
@@ -27,10 +28,13 @@ export class MainComponent implements OnInit, OnDestroy {
     { name: 'Ad', time: '03:15', score: 90 },
     { name: 'Thomas', time: '04:05', score: 85 },
     { name: 'Théo', time: '04:05', score: 80},
-    { name: 'Louis', time: '04:05', score: 70 }
+    { name: 'Louis', time: '04:05', score: 70 },
+    { name: 'Flo', time: '04:05', score: 75 }
   ];
 
-  constructor() {}
+  constructor() {
+   this.targetTime = this.getMidnight();
+  }
 
   ngOnInit(): void {
     // Initialisation du compte à rebours
@@ -45,33 +49,49 @@ export class MainComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Démarre le compte à rebours
-  startCountdown(): void {
-    this.countdownInterval = setInterval(() => {
-      if (this.seconds === 0) {
-        if (this.minutes === 0) {
 
-          // Réinitialiser si le compte est à zéro
-          this.resetCountdown(); 
-        } else {
-          this.minutes--;
-          this.seconds = 59;
-        }
-      } else {
-        this.seconds--;
-      }
+   // heure de minuit au jours suivant
+   getMidnight(): Date {
+    const now = new Date();
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0); 
+    return midnight;
+  }
+
+  // temps restant jusqu'à minuit
+  calculateTimeLeft(): void {
+    const now = new Date().getTime();
+    const timeDifference = this.targetTime.getTime() - now;
+
+    if (timeDifference > 0) {
+      // Convertion
+      this.minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+      this.seconds = Math.floor((timeDifference / 1000) % 60);
+    } else {
+
+      // Si le temps est écoulé, réinitialition du labyrinthe
+      this.resetCountdown();
+    }
+  }
+
+
+   // Démarre le compte à rebours
+   startCountdown(): void {
+    this.calculateTimeLeft(); 
+    this.countdownInterval = setInterval(() => {
+      this.calculateTimeLeft(); 
     }, 1000);
   }
 
-  // Réinitialise le compte à rebours
+  // Réinitialition du compte à rebours à minuit du lendemain 
   resetCountdown(): void {
     clearInterval(this.countdownInterval); 
+    this.targetTime = this.getMidnight(); 
 
-    // Remet à 5 minutes
-    this.minutes = 5; 
-    this.seconds = 0;
+    // Redémarage du compte à rebours
     this.startCountdown(); 
   }
+
 
   ngOnDestroy(): void {
     clearInterval(this.countdownInterval); 

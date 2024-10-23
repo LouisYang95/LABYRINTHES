@@ -31,21 +31,21 @@
                         </div>
                     </div>
                 </div>
-                <!-- Like/Dislike -->
-                <div class="row my-4">
-                    <div class="col-6 text-center">
-                        <button class="btn btn-outline-success w-100">
-                            <mat-icon>thumb_up</mat-icon> {{ playerLikes }} Likes
-                        </button>
-                    </div>
-                    <div class="col-6 text-center">
-                        <button class="btn btn-outline-danger w-100">
-                            <mat-icon>thumb_down</mat-icon> {{ playerDislikes }} Dislikes
-                        </button>
+
+                <!-- Section avec fond pour Likes/Dislikes -->
+                <div class="p-3 mb-2 rounded bg-gradient bg-info text-dark shadow-sm">
+                    <div class="row my-4">
+                        <div class="col-6 text-center">
+                            <mat-icon class="text-success">thumb_up</mat-icon> {{ playerLikes }} Likes
+                        </div>
+                        <div class="col-6 text-center">
+                            <mat-icon class="text-danger">thumb_down</mat-icon> {{ playerDislikes }} Dislikes
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        
         <!-- Inventaire -->
         <div class="sous-menu col-md-6 col-12 pe-md-0">
             <div class="bg-white h-100 text-dark rounded-2 shadow py-2 px-3 row mx-auto overflow-auto scroll-bar">
