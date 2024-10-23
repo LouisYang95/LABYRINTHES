@@ -72,7 +72,9 @@ export const createMark = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'Veuillez renseigner un texte.' });
         }
 
-        if(!position_x || !position_y || !position_z) {
+        if (position_x === null || position_x === undefined ||
+            position_y === null || position_y === undefined ||
+            position_z === null || position_z === undefined) {
             return res.status(400).json({ message: 'Veuillez renseigner les coordonnées.' });
         }
 
