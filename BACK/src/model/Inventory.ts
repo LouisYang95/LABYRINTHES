@@ -39,8 +39,9 @@ Inventory.belongsTo(User, {
     targetKey: "id"
 })
 
-Inventory.belongsTo(Objects, {
+Inventory.belongsTo(User, {
     foreignKey: "object_id",
     targetKey: "id"
 })
+
 export default Inventory;
