@@ -42,13 +42,15 @@
         <!-- Affichage de la somme des pièces du joueur -->
         <h4 *ngIf="currentmonnaie === 1" class="text-center pt-3">Monnaie Cadeaux : {{ giftCurrency}} pièces</h4>
         <h4 *ngIf="currentmonnaie === 2" class="text-center pt-3">Monnaie Pièges : {{ trapCurrency }}pièces</h4>
-        <div class="row">
-          <div *ngFor="let item of currentList"class="col-md-3 col-10 mx-auto px-0 py-2 rounded-5 mb-4 text-bg-light text-center text-dark">
-            <img [src]="item.image" alt="{{ item.name }}" class="img-fluid" style="max-height: 150px;">
-            <h4>{{ item.name }}</h4>
-            <span class="fst-italic px-2 rounded-top-5 text-bg-light text-nowrap">{{ item.description }}</span>
-            <span class="d-block my-2 text-bg-dark text-warning">{{ item.price }} pièces</span>
-            <button class="btn btn-success" (click)="buyItem(item)">Acheter</button>
+        <div class="row mx-auto">
+          <div *ngFor="let item of currentList" class="col-md-4 col-10">
+            <div class="col-9 mx-auto rounded-5 px-0 py-2 mb-4 text-bg-light text-center text-dark">
+              <img [src]="item.image" alt="{{ item.name }}" class="img-fluid" style="max-height: 150px;">
+              <h4>{{ item.name }}</h4>
+              <span class="fst-italic px-2 rounded-top-5 text-bg-light">{{ item.description }}</span>
+              <span class="d-block my-2 text-bg-dark text-warning">{{ item.price }} pièces</span>
+              <button class="btn btn-success" (click)="buyItem(item)">Acheter</button>
+            </div>
           </div>
         </div>
       </div>
