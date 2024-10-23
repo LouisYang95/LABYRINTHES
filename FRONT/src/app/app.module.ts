@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/components/header/header.component';
 import { MatIconModule } from '@angular/material/icon'
 import { MainComponent } from './components/main/main.component';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { BoutiqueComponent } from './components/boutique/boutique.component';
@@ -17,6 +17,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieModule } from 'ngx-cookie';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 LOAD_WASM().subscribe();
 
@@ -41,11 +42,9 @@ LOAD_WASM().subscribe();
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     CookieModule.withOptions(),
-    MatSidenavModule
-   
-    
+    MatSidenavModule,
   ],
-  providers: [  ],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

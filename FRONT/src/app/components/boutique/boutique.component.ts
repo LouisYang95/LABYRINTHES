@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { item } from 'src/app/core/models/item';
+import { BoutiqueService } from 'src/app/core/services/boutique.service';
 
 @Component({
   selector: 'app-boutique',
   templateUrl: './boutique.component.html',
-  styleUrls: ['./boutique.component.scss'],
+  styleUrls: ['./boutique.component.scss']
 })
-export class BoutiqueComponent {
+export class BoutiqueComponent implements OnInit, OnDestroy {
   // Monnaie pour les cadeaux
   giftCurrency: number = 1500;
   // Monnaie pour les pièges
@@ -18,22 +20,22 @@ export class BoutiqueComponent {
   listTitle = 'Articles à acheter';
   cart: any[] = [];
   showCart = false;
-  gifts = [
-    { name: 'Potion de vie', description: 'Restaure 50% de la santé.', image: 'assets/img/p.png', price: 200 },
-    { name: 'Clé magique', description: 'Ouvre une porte secrète.', image: 'assets/img/cl.png', price: 300 },
-    { name: 'Boussole dorée', description: 'Montre la sortie du labyrinthe.', image: 'assets/img/bou.png', price: 500 },
-  ];
-  traps = [
-    { name: 'Fosse cachée', description: 'Vous fait tomber dans un piège.', image: 'assets/img/foss.png', price: 150 },
-    { name: 'Mur invisible', description: 'Bloque votre chemin.', image: 'assets/img/mu.png', price: 250 },
-    { name: 'Brouillard', description: 'Réduit la visibilité.', image: 'assets/img/bro.png', price: 350 },
-  ];
+  gifts: item[] = [];
+  traps: item[] = [];
 
-  constructor(private toast: ToastrService) {
+  constructor(private toast: ToastrService, private boutiqueService: BoutiqueService) {
     this.currentList = this.gifts;
     this.showGifts();
   }
 
+  ngOnInit(): void {
+    this.boutiqueService.getAll().subscribe(res => {
+      res.forEach(element => {
+        if (element.type === "good") this.gifts.push(element);
+        else this.traps.push(element);
+      });
+    });
+  }
   // Afficher la liste des cadeaux
   showGifts() {
     this.currentList = this.gifts;
@@ -66,7 +68,6 @@ export class BoutiqueComponent {
       } else this.toast.error("Vous n'avez pas assez de pièces pour les pièges !");
     }
   }
-
   // supprimer un article du panier
   removeItem(item: any): void {
     const index = this.cart.indexOf(item);
@@ -82,4 +83,5 @@ export class BoutiqueComponent {
   toggleCartView(): void {
     this.showCart = !this.showCart;
   }
+  ngOnDestroy(): void {}
 }
