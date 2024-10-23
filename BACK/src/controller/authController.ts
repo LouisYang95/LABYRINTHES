@@ -1,6 +1,7 @@
 import {Request, Response} from 'express';
 import User from "../model/User";
 import bcrypt from "bcrypt";
+import LabyrinthVersion from "../model/LabyrinthVersion";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
@@ -64,7 +65,15 @@ export const login = async (req: Request, res: Response) => {
             return res.status(400).json({message: "Invalid username or password."});
         }
 
-        return res.status(200).json({message: "Login successful", user: userInfo});
+
+        const actualLabyrinthVersion = await LabyrinthVersion.findOne({
+            where: {
+                is_active: true
+            },
+        });
+
+
+        return res.status(200).json({message: "Login successful", user: userInfo, labyrinth_version: actualLabyrinthVersion});
     } catch (error) {
         console.error("Error during user login :", error);
         res
