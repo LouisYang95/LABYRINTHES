@@ -72,8 +72,17 @@ export const login = async (req: Request, res: Response) => {
             },
         });
 
+        if(!actualLabyrinthVersion){
+            return res.status(500).json({message: "Error during user login, no labyrinth available"});
+        }
 
-        return res.status(200).json({message: "Login successful", user: userInfo, labyrinth_version: actualLabyrinthVersion});
+        const labyrinthVersionInfo = {
+            id: actualLabyrinthVersion.id,
+            seed: actualLabyrinthVersion.seed
+        }
+
+
+        return res.status(200).json({message: "Login successful", user: userInfo, labyrinth_version: labyrinthVersionInfo});
     } catch (error) {
         console.error("Error during user login :", error);
         res
