@@ -43,4 +43,5 @@ Inventory.belongsTo(Objects, {
     foreignKey: "object_id",
     targetKey: "id"
 })
+
 export default Inventory;
