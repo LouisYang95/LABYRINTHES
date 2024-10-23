@@ -1,6 +1,6 @@
 import express from "express";
 import { saveTimer } from "../controller/UserController";
-import { getInventory } from "../controller/inventoryController";
+import {getInventory, useObject} from "../controller/inventoryController";
 
 const router = express.Router();
 
@@ -95,5 +95,6 @@ const router = express.Router();
 
 router.post('/:user_id/finish', saveTimer);
 router.get('/:user_id/inventory', getInventory);
+router.post('/:user_id/:inventory_id/delete', useObject)
 
 export default router;
