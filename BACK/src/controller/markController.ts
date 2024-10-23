@@ -7,13 +7,29 @@ import markInteraction from "../model/MarkInteraction";
 import LabyrinthLevel from "../model/LabyrinthLevel";
 
 export const getMarksByLabyrinthId = async (req: Request, res: Response) => {
-    const { labyrinth_version_id, labyrinth_level_id } = req.params;
+    const { labyrinth_version_id, labyrinth_level } = req.params;
 
     try {
+
+        if(!labyrinth_version_id || !labyrinth_level) {
+            return res.status(404).json({ message: 'Aucune labyrinthe ou étage trouvé.' });
+        }
+
+        const labyrinth_level_info = await LabyrinthLevel.findOne({
+            where: {
+                labyrinth_version_id: labyrinth_version_id,
+                level_number: labyrinth_level
+            }
+        });
+
+        if(!labyrinth_level_info) {
+            return res.status(404).json({ message: 'Aucune labyrinthe ou étage trouvé.' });
+        }
+
         const marks = await Mark.findAll({
             where: {
                 labyrinth_version_id: labyrinth_version_id,
-                labyrinth_level_id: labyrinth_level_id
+                labyrinth_level_id: labyrinth_level_info.id
             },
             include: [
                 {
@@ -23,7 +39,8 @@ export const getMarksByLabyrinthId = async (req: Request, res: Response) => {
                     model: markInteraction
                 },
                 {
-                    model: User
+                    model: User,
+                    attributes: { exclude: ['password'] }
                 }
                 ]
         });
@@ -118,7 +135,8 @@ export const createMark = async (req: Request, res: Response) => {
                     model: markInteraction
                 },
                 {
-                    model: User
+                    model: User,
+                    attributes: { exclude: ['password'] }
                 }
             ]
         });

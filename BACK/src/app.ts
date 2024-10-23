@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import swaggerDocs from "./swagger";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
@@ -12,6 +13,8 @@ import trapRoutes from "./routes/trapRoutes";
 export const App = express();
 
 App.use(express.json());
+App.use(cors());
+
 
 App.use('/mark', markRoutes);
 App.use('/user', userRoutes);
