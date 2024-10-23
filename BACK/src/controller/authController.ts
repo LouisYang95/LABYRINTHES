@@ -82,7 +82,11 @@ export const login = async (req: Request, res: Response) => {
         }
 
 
-        return res.status(200).json({message: "Login successful", user: userInfo, labyrinth_version: labyrinthVersionInfo});
+        return res.status(200).json(
+            {message: "Login successful",
+            user: userInfo,
+            labyrinth_version: labyrinthVersionInfo});
+
     } catch (error) {
         console.error("Error during user login :", error);
         res

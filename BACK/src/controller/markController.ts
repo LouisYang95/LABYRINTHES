@@ -40,7 +40,7 @@ export const getMarksByLabyrinthId = async (req: Request, res: Response) => {
 }
 
 export const createMark = async (req: Request, res: Response) => {
-    const { user_id, labyrinth_version_id, labyrinth_level_id, text, position_x, position_y, position_z } = req.body;
+    const { user_id, labyrinth_version_id, labyrinth_level, text, position_x, position_y, position_z } = req.body;
 
     try {
         const user = await User.findByPk(user_id);
@@ -53,14 +53,23 @@ export const createMark = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'Version de labyrinthe non trouvée.' });
         }
 
-        const labyrinthLevel = await LabyrinthLevel.findByPk(labyrinth_level_id);
+        const labyrinthLevel = await LabyrinthLevel.findOne({
+            where: {
+                labyrinth_version_id: labyrinth_version_id,
+                level_number: labyrinth_level
+            }
+        });
+
+        if(!labyrinthLevel){
+            return res.status(404).json({ message: 'Niveau de labyrinthe non trouvé.' });
+        }
 
         const sameTextMark = await Mark.findOne({
             where: {
                 text: text,
                 labyrinth_version_id: labyrinth_version_id,
                 user_id: user_id,
-                labyrinth_level_id: labyrinth_level_id
+                labyrinth_level_id: labyrinthLevel.id
             }
         });
 
@@ -81,7 +90,7 @@ export const createMark = async (req: Request, res: Response) => {
         const newMark = await Mark.create({
             user_id,
             labyrinth_version_id,
-            labyrinth_level_id,
+            labyrinth_level_id: labyrinthLevel.id,
             text
         });
 
