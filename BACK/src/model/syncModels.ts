@@ -10,6 +10,7 @@ import Mark from "./Mark";
 import MarkPosition from "./MarkPosition";
 import MarkInteraction from "./MarkInteraction";
 import Traps from "./Traps";
+import LabyrinthLevel from "./LabyrinthLevel";
 
 export default function syncModels(): Promise<void> {
     sequelize.sync({ alter: true });
@@ -18,6 +19,7 @@ export default function syncModels(): Promise<void> {
     Marketplace.sync();
     Inventory.sync();
     LabyrinthVersion.sync();
+    LabyrinthLevel.sync();
     Top.sync();
     Traps.sync();
     Mark.sync();
