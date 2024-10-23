@@ -7,16 +7,20 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./boutique.component.scss'],
 })
 export class BoutiqueComponent {
-  playerCurrency = 1500; 
+  // Monnaie pour les cadeaux
+  giftCurrency: number = 1500; 
+
+  // Monnaie pour les pièges
+  trapCurrency: number = 800;  
 
   // Liste des articles (cadeaux ou pièges)
-  currentList: any[] = []; 
-  showList = false; 
+  currentList: any[] = [];
+  showList = false;
   listTitle = 'Articles à acheter';
-  cart: any[] = []; 
-  showCart = false; 
+  cart: any[] = [];
+  showCart = false;
 
-  // Liste des cadeaux et pièges
+  
   gifts = [
     { name: 'Potion de vie', description: 'Restaure 50% de la santé.', image: 'assets/img/p.png', price: 200 },
     { name: 'Clé magique', description: 'Ouvre une porte secrète.', image: 'assets/img/cl.png', price: 300 },
@@ -30,16 +34,17 @@ export class BoutiqueComponent {
   ];
 
   constructor(private toast: ToastrService) {
-    
-    this.currentList = this.gifts;
+    this.currentList = this.gifts; 
   }
 
+  // Afficher la liste des cadeaux
   showGifts() {
     this.currentList = this.gifts;
     this.listTitle = 'Liste des Cadeaux';
     this.showList = true;
   }
 
+  // Afficher la liste des pièges
   showTraps() {
     this.currentList = this.traps;
     this.listTitle = 'Liste des Pièges';
@@ -48,32 +53,47 @@ export class BoutiqueComponent {
 
   // Acheter un article
   buyItem(item: any): void {
-    if (this.playerCurrency >= item.price) {
-      this.playerCurrency -= item.price;
+    if (this.currentList === this.gifts) {
 
-      // Ajouter l'article au panier
-      this.cart.push(item); 
-      this.toast.success(`${item.name} acheté avec succès !`);
-    } else {
-      this.toast.error("Vous n'avez pas assez de pièces !");
+      // Si c'est un cadeau, utiliser la monnaie des cadeaux
+      if (this.giftCurrency >= item.price) {
+        this.giftCurrency -= item.price;
+        this.cart.push(item); 
+        this.toast.success(`${item.name} acheté avec succès !`);
+      } else {
+        this.toast.error("Vous n'avez pas assez de pièces pour les cadeaux !");
+      }
+    } else if (this.currentList === this.traps) {
+
+      // Si c'est un piège, utiliser la monnaie des pièges
+      if (this.trapCurrency >= item.price) {
+        this.trapCurrency -= item.price;
+        this.cart.push(item); 
+        this.toast.success(`${item.name} acheté avec succès !`);
+      } else {
+        this.toast.error("Vous n'avez pas assez de pièces pour les pièges !");
+      }
     }
   }
 
-  // Supprimer un article du panier
+  // supprimer un article du panier
   removeItem(item: any): void {
     const index = this.cart.indexOf(item);
     if (index > -1) {
-
-      // Supprimer l'article du panier
       this.cart.splice(index, 1); 
 
-      // Restituer le prix de l'article au joueur
-      this.playerCurrency += item.price; 
+      // retour de la monnaie selon le type d'article
+      if (this.gifts.includes(item)) {
+        this.giftCurrency += item.price; 
+      } else if (this.traps.includes(item)) {
+        this.trapCurrency += item.price; 
+      }
+
       this.toast.info(`${item.name} retiré du panier.`);
     }
   }
 
-  // Activer ou désactiver l'affichage du panier 
+  // Activer ou désactiver l'affichage du panier
   toggleCartView(): void {
     this.showCart = !this.showCart;
   }

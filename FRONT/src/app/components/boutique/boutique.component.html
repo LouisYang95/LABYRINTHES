@@ -34,34 +34,35 @@
   
           <!-- Affichage de la somme des pièces du joueur -->
           <div class="text-center mt-2">
-            <h4>Vous avez : {{ playerCurrency }} pièces</h4>
+            <h4>Monnaie Cadeaux : {{ giftCurrency }} pièces</h4>
+            <h4>Monnaie Pièges : {{ trapCurrency }} pièces</h4>
           </div>
   
-          <!-- Boutons pour afficher les cadeaux et pièges -->
-          <div class="d-flex justify-content-center mt-4">
-            <button (click)="showGifts()" class="btn btn-outline-light me-4">
-              <mat-icon>thumb_up</mat-icon> Cadeaux
-            </button>
-            <button (click)="showTraps()" class="btn btn-danger ms-4">
-              <mat-icon>thumb_down</mat-icon> Pièges
-            </button>
-          </div>
+        <!-- Boutons pour afficher les cadeaux et pièges -->
+        <div class="d-flex justify-content-center mt-4">
+          <button (click)="showGifts()" class="btn btn-outline-light me-4">
+            <mat-icon>thumb_up</mat-icon> Cadeaux
+          </button>
+          <button (click)="showTraps()" class="btn btn-danger ms-4">
+            <mat-icon>thumb_down</mat-icon> Pièges
+          </button>
+        </div>
   
-          <!-- Liste des Cadeaux ou Pièges -->
-          <div *ngIf="showList" class="mt-4">
-            <h3>{{ listTitle }}</h3>
-            <div class="row">
-              <div *ngFor="let item of currentList" class="col-md-4 text-center mb-4">
-                <img [src]="item.image" alt="{{ item.name }}" class="img-fluid mb-2" style="max-height: 150px;">
-                <h4>{{ item.name }}</h4>
-                <p>{{ item.description }}</p>
-                <p>{{ item.price }} pièces</p>
-                <button class="btn btn-success" (click)="buyItem(item)">Acheter</button>
-              </div>
+         <!-- Liste des Cadeaux ou Pièges -->
+        <div *ngIf="showList" class="mt-4">
+          <h3>{{ listTitle }}</h3>
+          <div class="row">
+            <div *ngFor="let item of currentList" class="col-md-4 text-center mb-4">
+              <img [src]="item.image" alt="{{ item.name }}" class="img-fluid mb-2" style="max-height: 150px;">
+              <h4>{{ item.name }}</h4>
+              <p>{{ item.description }}</p>
+              <p>{{ item.price }} pièces</p>
+              <button class="btn btn-success" (click)="buyItem(item)">Acheter</button>
             </div>
           </div>
         </div>
       </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
   
