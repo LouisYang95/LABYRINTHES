@@ -1,68 +1,57 @@
-<mat-sidenav-container class="example-container vh-100">
-    <!-- Panneau coulissant pour le panier -->
-    <mat-sidenav #drawer mode="side" position="end" [opened]="showCart" disableClose>
-      <h3 class="text-center mt-4">Votre Panier</h3>
-      
-      <div *ngIf="cart.length === 0" class="text-center mt-4">Votre panier est vide.</div>
-  
-      <div *ngFor="let item of cart" class="d-flex justify-content-between align-items-center mb-2 p-2">
-        <div class="d-flex align-items-center">
-          <img [src]="item.image" alt="{{ item.name }}" class="img-fluid me-2" style="max-height: 50px;">
-          <strong>{{ item.name }}</strong> - {{ item.price }} pièces
-        </div>
-        <button class="btn btn-danger" (click)="removeItem(item)">Retirer</button>
+<mat-sidenav-container class="example-container">
+  <!-- Panneau coulissant pour le panier -->
+  <mat-sidenav #drawer mode="side" position="end" [opened]="showCart" disableClose>
+    <h3 class="text-center mt-4">Votre Panier</h3>
+    <div *ngIf="cart.length === 0" class="text-center my-4">Votre panier est vide.</div>
+    <div *ngFor="let item of cart" class="d-flex justify-content-between align-items-center mb-2 p-2">
+      <div class="d-flex align-items-center">
+        <img [src]="item.image" alt="{{ item.name }}" class="img-fluid me-2" style="max-height: 50px;">
+        <strong>{{ item.name }}</strong> - {{ item.price }} pièces
       </div>
-  
-      <!-- Bouton pour fermer le panier -->
-      <button mat-button (click)="toggleCartView()" class="btn btn-outline-primary mt-4">Fermer le panier</button>
-    </mat-sidenav>
-  
-    <!-- Contenu principal de la boutique -->
-    <mat-sidenav-content>
-      <div class="main mb-4 row mx-auto">
-        <div class="bg-main-secondary rounded-2 mt-10 col-md-8 mx-md-auto col-12">
-          <div class="row text-white py-3">
-            <div class="col-3 text-center">
-              <mat-icon class="fs-1 w-100 h-100">store</mat-icon>
-            </div>
-            <h1 class="col-6 text-center">Boutique</h1>
-            <div class="col-3 text-center position-relative">
-              <mat-icon class="fs-1 w-100 h-100" (click)="toggleCartView()">shopping_cart</mat-icon>
-              <span class="badge bg-danger position-absolute top-0 start-50 translate-middle">{{ cart.length }}</span>
-            </div>
-          </div>
-  
-          <!-- Affichage de la somme des pièces du joueur -->
-          <div class="text-center mt-2">
-            <h4>Monnaie Cadeaux : {{ giftCurrency }} pièces</h4>
-            <h4>Monnaie Pièges : {{ trapCurrency }} pièces</h4>
-          </div>
-  
-        <!-- Boutons pour afficher les cadeaux et pièges -->
-        <div class="d-flex justify-content-center mt-4">
-          <button (click)="showGifts()" class="btn btn-outline-light me-4">
-            <mat-icon>thumb_up</mat-icon> Cadeaux
-          </button>
-          <button (click)="showTraps()" class="btn btn-danger ms-4">
-            <mat-icon>thumb_down</mat-icon> Pièges
-          </button>
+      <button class="btn btn-danger" (click)="removeItem(item)">Retirer</button>
+    </div>
+
+    <!-- Bouton pour fermer le panier -->
+    <button mat-button (click)="toggleCartView()" class="btn btn-outline-primary d-block mx-auto">Fermer le panier</button>
+  </mat-sidenav>
+
+  <!-- Contenu principal de la boutique -->
+  <mat-sidenav-content class="main row mx-auto h-auto">
+    <div class="bg-main-secondary rounded-2 mt-10 col-md-8 mx-md-auto col-12">
+      <div class="row text-white py-3">
+        <div class="col-3 text-center align-self-center">
+          <mat-icon class="fs-1 w-100 h-100">store</mat-icon>
         </div>
-  
-         <!-- Liste des Cadeaux ou Pièges -->
-        <div *ngIf="showList" class="mt-4">
-          <h3>{{ listTitle }}</h3>
-          <div class="row">
-            <div *ngFor="let item of currentList" class="col-md-4 text-center mb-4">
-              <img [src]="item.image" alt="{{ item.name }}" class="img-fluid mb-2" style="max-height: 150px;">
-              <h4>{{ item.name }}</h4>
-              <p>{{ item.description }}</p>
-              <p>{{ item.price }} pièces</p>
-              <button class="btn btn-success" (click)="buyItem(item)">Acheter</button>
-            </div>
+        <h1 class="col-6 text-center m-0 title">Boutique</h1>
+        <div class="col-3 text-center position-relative align-self-center">
+          <mat-icon class="fs-1 w-100 h-100" (click)="toggleCartView()">shopping_cart</mat-icon>
+          <span class="badge bg-danger position-absolute top-0 start-50 translate-middle">{{ cart.length }}</span>
+        </div>
+      </div>
+      <!-- Boutons pour afficher les cadeaux et pièges -->
+      <div class="d-flex justify-content-center mb-4">
+        <button (click)="showGifts()" class="btn btn-info text-white me-4">
+          <mat-icon>thumb_up</mat-icon> Cadeaux
+        </button>
+        <button (click)="showTraps()" class="btn btn-danger ms-4">
+          <mat-icon>thumb_down</mat-icon> Pièges
+        </button>
+      </div>
+      <!-- Liste des Cadeaux ou Pièges -->
+      <div *ngIf="showList" class="text-white rounded-top-5" [ngClass]="{'text-bg-info': currentmonnaie === 1, 'text-bg-danger': currentmonnaie === 2}">
+        <!-- Affichage de la somme des pièces du joueur -->
+        <h4 *ngIf="currentmonnaie === 1" class="text-center pt-3">Monnaie Cadeaux : {{ giftCurrency}} pièces</h4>
+        <h4 *ngIf="currentmonnaie === 2" class="text-center pt-3">Monnaie Pièges : {{ trapCurrency }}pièces</h4>
+        <div class="row">
+          <div *ngFor="let item of currentList"class="col-md-3 col-10 mx-auto px-0 py-2 rounded-5 mb-4 text-bg-light text-center text-dark">
+            <img [src]="item.image" alt="{{ item.name }}" class="img-fluid" style="max-height: 150px;">
+            <h4>{{ item.name }}</h4>
+            <span class="fst-italic px-2 rounded-top-5 text-bg-light text-nowrap">{{ item.description }}</span>
+            <span class="d-block my-2 text-bg-dark text-warning">{{ item.price }} pièces</span>
+            <button class="btn btn-success" (click)="buyItem(item)">Acheter</button>
           </div>
         </div>
       </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-  
