@@ -1,10 +1,9 @@
 import LabyrinthVersion from "../model/LabyrinthVersion";
 
 import cron from "node-cron";
+import LabyrinthLevel from "../model/LabyrinthLevel";
 
 const scheduleDailySeed = () => {
-    console.log("Cron job is scheduled");
-
     cron.schedule("0 0 * * *", async () => {
         try {
             console.log("Cron task started");
@@ -34,8 +33,21 @@ const scheduleDailySeed = () => {
                 is_active: true,
             });
 
+            const newVersionId = newVersion.get("id");
+
+            for(let i = 0; i < 5; i++) {
+                const newLabyrinthLevel = await LabyrinthLevel.create({
+                    labyrinth_version_id: newVersionId,
+                    level_number: i
+                });
+
+                if (!newLabyrinthLevel) {
+                    console.error("Error creating labyrinth level");
+                }
+            }
+
             console.log("New seed added successfully:", newSeed, newVersion);
-            return { status: 201, message: "New seed added successfully", seed: newSeed };
+            return { status: 201, message: "New seed added successfully"};
 
         } catch (error) {
             console.error("Error adding new seed:", error);

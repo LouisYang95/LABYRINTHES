@@ -12,10 +12,10 @@ const router = express.Router();
 
 /**
  * @swagger
- * /mark/{labyrinth_version_id}:
+ * /mark/{labyrinth_version_id}/{labyrinth_level_id}:
  *   get:
- *     summary: Récupérer toutes les marques d'un labyrinthe
- *     description: Cette route permet de récupérer toutes les marques pour une version spécifique du labyrinthe.
+ *     summary: Récupérer toutes les marques d'un niveau de labyrinthe
+ *     description: Cette route permet de récupérer toutes les marques pour une version et un niveau spécifique du labyrinthe.
  *     tags: [Mark]
  *     parameters:
  *       - in: path
@@ -24,6 +24,12 @@ const router = express.Router();
  *         schema:
  *           type: integer
  *         description: ID de la version du labyrinthe
+ *       - in: path
+ *         name: labyrinth_level_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID du niveau du labyrinthe
  *     responses:
  *       200:
  *         description: Marques récupérées avec succès
@@ -50,7 +56,7 @@ const router = express.Router();
  *                       position_z:
  *                         type: integer
  *       404:
- *         description: Aucune marque trouvée pour ce labyrinthe
+ *         description: Aucune marque trouvée pour ce labyrinthe et niveau
  */
 
 /**
@@ -69,6 +75,7 @@ const router = express.Router();
  *             required:
  *               - user_id
  *               - labyrinth_version_id
+ *               - labyrinth_level_id
  *               - text
  *               - position_x
  *               - position_y
@@ -77,6 +84,8 @@ const router = express.Router();
  *               user_id:
  *                 type: integer
  *               labyrinth_version_id:
+ *                 type: integer
+ *               labyrinth_level_id:
  *                 type: integer
  *               text:
  *                 type: string
@@ -98,7 +107,7 @@ const router = express.Router();
  * /mark/interaction:
  *   post:
  *     summary: Ajouter une interaction avec une marque
- *     description: Permet à un utilisateur d'ajouter une interaction (comme ou dislike) à une marque existante.
+ *     description: Permet à un utilisateur d'ajouter une interaction (like ou dislike) à une marque existante.
  *     tags: [Mark]
  *     requestBody:
  *       required: true
@@ -119,7 +128,7 @@ const router = express.Router();
  *                 type: string
  *                 enum: [like, dislike]
  *     responses:
- *       200:
+ *       201:
  *         description: Interaction ajoutée avec succès
  *       400:
  *         description: Mauvaise requête
@@ -127,8 +136,9 @@ const router = express.Router();
  *         description: Marque non trouvée
  */
 
-router.get('/:labyrinth_version_id', getMarksByLabyrinthId);
+router.get('/:labyrinth_version_id/:labyrinth_level_id', getMarksByLabyrinthId);
 router.post('/create', createMark);
 router.post('/interaction', newInteractionForMark);
 
 export default router;
+
