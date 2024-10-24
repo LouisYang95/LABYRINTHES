@@ -9,6 +9,7 @@ import markRoutes from "./routes/markRoutes";
 import topRoutes from "./routes/topRoutes";
 import seedRoutes from "./routes/labyrinthRoute";
 import trapRoutes from "./routes/trapRoutes";
+import selectedItemRoute from "./routes/selectedItemRoute";
 
 export const App = express();
 
@@ -22,6 +23,7 @@ App.use('/auth', authRoutes);
 App.use('/top', topRoutes);
 App.use('/seed',seedRoutes);
 App.use('/trap', trapRoutes);
+App.use('/selected_item', selectedItemRoute);
 
 scheduleDailySeed()
 

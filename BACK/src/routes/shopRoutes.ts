@@ -73,7 +73,7 @@ const router = express.Router();
 /**
  * @swagger
  * /shop/buy/{user_id}/{object_id}:
- *   get:
+ *   post:
  *     summary: Acheter un objet de la boutique
  *     description: Cette route permet à un utilisateur d'acheter un objet de la boutique en fonction de son ID.
  *     tags: [Shop]
