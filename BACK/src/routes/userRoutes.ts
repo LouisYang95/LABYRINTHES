@@ -1,6 +1,6 @@
 import express from "express";
 import { saveTimer } from "../controller/UserController";
-import {getInventory, useObject} from "../controller/inventoryController";
+import { getInventory, useObject } from "../controller/inventoryController";
 
 const router = express.Router();
 
@@ -48,10 +48,15 @@ const router = express.Router();
  *                 message:
  *                   type: string
  *                   example: "Minuteur enregistré avec succès."
+ *                 top:
+ *                   type: object
+ *                   description: Top mis à jour après la sauvegarde du minuteur
  *       400:
  *         description: Requête incorrecte
  *       404:
  *         description: Utilisateur non trouvé
+ *       500:
+ *         description: Erreur serveur lors de la sauvegarde du minuteur
  */
 
 /**
@@ -63,7 +68,7 @@ const router = express.Router();
  *     tags: [User]
  *     parameters:
  *       - in: path
- *         user_id: user_id
+ *         name: user_id
  *         required: true
  *         schema:
  *           type: integer
@@ -93,8 +98,45 @@ const router = express.Router();
  *         description: Erreur serveur lors de la récupération de l'inventaire
  */
 
+/**
+ * @swagger
+ * /user/{user_id}/{inventory_id}/delete:
+ *   post:
+ *     summary: Utiliser un objet de l'inventaire de l'utilisateur
+ *     description: Cette route permet à un utilisateur de supprimer un objet de son inventaire.
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'utilisateur
+ *       - in: path
+ *         name: inventory_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'objet dans l'inventaire
+ *     responses:
+ *       200:
+ *         description: Objet utilisé et supprimé avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Objet utilisé avec succès."
+ *       404:
+ *         description: Utilisateur ou objet non trouvé
+ *       500:
+ *         description: Erreur serveur lors de la suppression de l'objet
+ */
+
 router.post('/:user_id/finish', saveTimer);
 router.get('/:user_id/inventory', getInventory);
-router.post('/:user_id/:inventory_id/delete', useObject)
+router.post('/:user_id/:inventory_id/delete', useObject);
 
 export default router;

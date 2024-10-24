@@ -3,6 +3,7 @@ import Inventory from "../model/Inventory";
 import Objects from "../model/Objects";
 
 export const getInventory = async (req: Request, res: Response) => {
+    console.log(req.params);
     try {
         const { user_id } = req.params;
 
