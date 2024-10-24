@@ -25,8 +25,13 @@
         <label><input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe" /> Se souvenir de moi</label>
       </div>
 
-      <!-- Bouton de soumission -->
-      <button type="submit" class="btn btn-success w-100" [disabled]="loginForm.invalid">Connexion</button>
+
+        <!-- Bouton de soumission -->
+        <button type="submit" class="btn btn-success w-100" [disabled]="loginForm.invalid">Connexion</button>
+        <p class="switch-link text-center mt-3">Pas encore inscrit ? <a routerLink="/register">Inscrivez-vous ici</a></p>
+        <div *ngIf="errorMessage" class="error-message text-danger">
+          <p>{{ errorMessage }}</p>
+        </div>
     </form>
   </div>
 </div>
