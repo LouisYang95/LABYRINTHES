@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieOptions, CookieService } from 'ngx-cookie';
 import { ToastrService } from 'ngx-toastr';
+import { authResponse } from 'src/app/core/models/authResponse';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -10,41 +11,36 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  username: string = ''; 
+  username: string = '';
   password: string = '';
   rememberMe: boolean = false;
   errorMessage: string = '';
-  cookiesOption: CookieOptions = { };
+  cookiesOption: CookieOptions = {};
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router,
     private toast: ToastrService,
     private cookieService: CookieService
-  ) {}
+  ) { }
 
   onLogin() {
     this.errorMessage = '';
 
     // Appel du service d'authentification pour le login
-    this.authService.login(this.username, this.password).subscribe(
-      (response: { message: string; user: { username: string }; labyrinth_version: { seed: number } }) => {
-        if (response && response.message === 'Login successful') {
-          this.toast.success("Connexion réussie", "Authentification");
-
-          // Sauvegarder les informations si "Se souvenir de moi" est coché
-          sessionStorage.setItem('username', this.username);
-          if (this.rememberMe) {
-            this.cookieService.put('username', this.username);
-            this.cookieService.put('password', this.password);
-          } else {
-            this.cookieService.removeAll();
-          }
-
-          // Redirection vers la page de tableau de bord
-          this.router.navigate(['/']); 
-        }
-      },
+    this.authService.login(this.username, this.password).subscribe((response: authResponse) => {
+      if (response && response.message === 'Login successful') {
+        this.toast.success("Connexion réussie", "Authentification");
+        // Sauvegarder les informations si "Se souvenir de moi" est coché
+        sessionStorage.setItem('username', this.username);
+        if (this.rememberMe) {
+          this.cookieService.put('username', this.username);
+          this.cookieService.put('password', this.password);
+        } else this.cookieService.removeAll();
+        // Redirection vers la page de tableau de bord
+        this.router.navigate(['/']);
+      }
+    },
       (error: any) => {
         // En cas d'erreur de connexion
         this.errorMessage = 'Connexion échouée. Veuillez vérifier vos identifiants.';
