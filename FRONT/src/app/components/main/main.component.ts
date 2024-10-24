@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Winner } from 'src/app/core/models/winner';
+import { Subscription } from 'rxjs';
+import { Score } from 'src/app/core/models/score';
+import { TopService } from 'src/app/core/services/top.service';
 
 @Component({
   selector: 'app-main',
@@ -13,16 +15,12 @@ export class MainComponent implements OnInit, OnDestroy {
   countdownInterval: any;
   targetTime: Date;
   // Liste des winners
-  winners: Winner[] = [
-    { name: 'Abed', time: '02:30', score: 89 },
-    { name: 'Ad', time: '03:15', score: 90 },
-    { name: 'Thomas', time: '04:05', score: 85 },
-    { name: 'Théo', time: '04:05', score: 80 },
-    { name: 'Louis', time: '04:05', score: 70 },
-    { name: 'Flo', time: '04:05', score: 75 }
-  ];
+  generalScore: Score[] = [];
+  goodScore: Score[] = [];
+  badScore: Score[] = [];
+  subscription: Subscription[] = [];
 
-  constructor() {
+  constructor(private topService: TopService) {
     this.targetTime = this.getMidnight();
   }
 
@@ -36,6 +34,7 @@ export class MainComponent implements OnInit, OnDestroy {
       const value = scrollHeight > viewportHeight ? window.pageYOffset / (scrollHeight - viewportHeight) : 0;
       document.body.style.setProperty('--scroll', value.toString());
     });
+    this.getScores();
   }
   // heure de minuit au jours suivant
   getMidnight(): Date {
@@ -65,11 +64,18 @@ export class MainComponent implements OnInit, OnDestroy {
   resetCountdown(): void {
     clearInterval(this.countdownInterval);
     this.targetTime = this.getMidnight();
-
     // Redémarage du compte à rebours
     this.startCountdown();
   }
+  getScores(): void {
+    this.subscription.push(this.topService.getGeneral().subscribe(res => { this.generalScore = res; }));
+    this.subscription.push(this.topService.getGood().subscribe(res => { this.goodScore = res; }));
+    this.subscription.push(this.topService.getBad().subscribe(res => { this.badScore = res; }));
+  }
   ngOnDestroy(): void {
+    this.subscription.forEach(element => {
+      element.unsubscribe();
+    });
     clearInterval(this.countdownInterval);
     // Supprime l'événement de défilement
     window.removeEventListener('scroll', () => { });

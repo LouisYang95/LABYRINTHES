@@ -22,7 +22,7 @@
 .bloc {
     animation: spawn 1s linear infinite;
     animation-play-state: paused;
-    animation-delay: calc(var(--scroll) * -1s);
+    animation-delay: calc(var(--scroll) * -1.5s);
     animation-iteration-count: 1;
     animation-fill-mode: both;
 }

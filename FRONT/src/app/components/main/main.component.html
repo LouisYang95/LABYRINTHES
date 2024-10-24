@@ -11,20 +11,48 @@
     <div class="bloc col-md-8 mt-5 p-0 mx-md-auto col-12">
         <!-- Classement des gagnants -->
         <div class="text-warning">
-            <h2 class="mt-2 text-center">Classement des Winners</h2>
+            <h2 class="mt-2 text-center">Classement Général</h2>
             <table class="table table-striped table-dark mt-3">
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Temps</th>
                         <th>Score</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let winner of winners">
-                        <td>{{ winner.name }}</td>
-                        <td>{{ winner.time }}</td>
-                        <td>{{ winner.score }}</td>
+                    <tr *ngFor="let score of generalScore">
+                        <td>{{ score.username }}</td>
+                        <td>{{ score.score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 class="mt-2 text-center">Classement Likes</h2>
+            <table class="table table-striped table-dark mt-3">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let score of goodScore">
+                        <td>{{ score.username }}</td>
+                        <td>{{ score.score }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 class="mt-2 text-center">Classement Dislikes</h2>
+            <table class="table table-striped table-dark mt-3">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let score of badScore">
+                        <td>{{ score.username }}</td>
+                        <td>{{ score.score }}</td>
                     </tr>
                 </tbody>
             </table>
