@@ -16,10 +16,10 @@ export class HeaderComponent implements OnInit {
   constructor(private toast: ToastrService, private rooter: Router, private cookieService: CookieService) {}
 
   ngOnInit(): void {
-    if (this.cookieService.get("email") != undefined) this.flagConnecter = true;
+    if (this.cookieService.get("username") != undefined) this.flagConnecter = true;
   }
   openMenu(): void {
-    if (this.cookieService.get("email") != undefined || sessionStorage.getItem("email") != null) this.flagConnecter = true;
+    if (this.cookieService.get("username") != undefined || sessionStorage.getItem("username") != null) this.flagConnecter = true;
     else this.flagConnecter = false;
     if (this.flagMenu) this.panel.nativeElement.classList.remove('open');
     else this.panel.nativeElement.classList.add('open');
