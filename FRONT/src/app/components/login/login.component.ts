@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieOptions, CookieService } from 'ngx-cookie';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,45 +10,54 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  email: string = '';
+  username: string = ''; 
   password: string = '';
   rememberMe: boolean = false;
   errorMessage: string = '';
   cookiesOption: CookieOptions = { };
 
-  // Injecter Router dans le constructeur
-  constructor(private router: Router, private toast: ToastrService, private cookieService: CookieService) {
-    this.initCookies();
-  }
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private toast: ToastrService,
+    private cookieService: CookieService
+  ) {}
 
   onLogin() {
-    // Réinitialiser les messages
     this.errorMessage = '';
 
-    // Simuler une connexion réussie
-    if (this.email === 'test@example.com' && this.password === 'Password1!') {
-      this.toast.success("Connection établie avec succès", "Authentification réussi");
-      // Sauvegarder les informations si "Se souvenir de moi" est coché
-      sessionStorage.setItem('email', this.email);
-      sessionStorage.setItem('password', this.password);
-      if (this.rememberMe) {
-        this.cookieService.put("email", this.email, this.cookiesOption);
-        this.cookieService.put("password", this.password, this.cookiesOption);
-      } else this.cookieService.removeAll();
-      // Naviguer vers une autre page après la connexion (exemple : tableau de bord)
-      this.router.navigate(['/']);
-    } else this.errorMessage = 'Identifiants invalides. Veuillez réessayer.';
+    // Appel du service d'authentification pour le login
+    this.authService.login(this.username, this.password).subscribe(
+      (response: { message: string; user: { username: string }; labyrinth_version: { seed: number } }) => {
+        if (response && response.message === 'Login successful') {
+          this.toast.success("Connexion réussie", "Authentification");
+
+          // Sauvegarder les informations si "Se souvenir de moi" est coché
+          sessionStorage.setItem('username', this.username);
+          if (this.rememberMe) {
+            this.cookieService.put('username', this.username);
+            this.cookieService.put('password', this.password);
+          } else {
+            this.cookieService.removeAll();
+          }
+
+          // Redirection vers la page de tableau de bord
+          this.router.navigate(['/']); 
+        }
+      },
+      (error: any) => {
+        // En cas d'erreur de connexion
+        this.errorMessage = 'Connexion échouée. Veuillez vérifier vos identifiants.';
+        this.toast.error("Connexion échouée", "Erreur");
+        console.error('Erreur de connexion:', error);
+      }
+    );
   }
+
   initCookies(): void {
     let expiry = new Date();
-    expiry.setDate(expiry.getDate()+365);
+    expiry.setDate(expiry.getDate() + 365);
     this.cookiesOption.expires = expiry;
     this.cookiesOption.secure = true;
-  }
-  hasUpperCase(password: string): boolean {
-    return /[A-Z]/.test(password);
-  }
-  hasSpecialCharacter(password: string): boolean {
-    return /[!@#$%^&*(),.?":{}|<>]/.test(password);
   }
 }

@@ -8,17 +8,17 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   // URL API inscription
-  private registerUrl = 'http://localhost/register.php'; 
+  private registerUrl = 'https://labyrinthes-production-2e07.up.railway.app/auth/register.php'; 
 
   // URL API login
-  private loginUrl = 'http://localhost/login.php'; 
+  private loginUrl = 'https://labyrinthes-production-2e07.up.railway.app/auth/login';
 
   constructor(private http: HttpClient) { }
 
   // Inscription
   register(username: string, email: string, password: string): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = { username, email, password };
+    const body = { username: email, password };
     return this.http.post<any>(this.registerUrl, body, { headers });
   }
 

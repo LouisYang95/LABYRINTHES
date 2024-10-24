@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -12,19 +13,20 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
-  successMessage: string = '';
 
   // Injection router dans le constructeur
-  constructor(private router: Router) {}
+  constructor(private router: Router, private toast: ToastrService) {}
 
   onRegister() {
-    if (this.username && this.name && this.email && this.password) {
-      this.successMessage = 'Inscription réussie !';
-      this.errorMessage = '';
+    if (this.username && this.email && this.password) {
+      this.toast.success('Inscription réussie ', 'Inscription')
       this.router.navigate(['/login']);  
     } else {
+      console.log(this.username);
+      console.log(this.password);
+      console.log(this.email);
+      console.log(this.name);
       this.errorMessage = 'Veuillez remplir tous les champs requis.';
-      this.successMessage = '';
     }
   }
 }
