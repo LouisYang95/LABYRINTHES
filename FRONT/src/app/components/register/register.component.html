@@ -20,9 +20,6 @@
         <div *ngIf="errorMessage" class="error-message text-danger mt-2">
           <p>{{ errorMessage }}</p>
         </div>
-        <div *ngIf="successMessage" class="success-message text-success mt-2">
-          <p>{{ successMessage }}</p>
-        </div>
       </div>
       <!-- Bouton de soumission -->
       <button type="submit" class="btn btn-success w-100" [disabled]="registerForm.invalid">Inscription</button>
