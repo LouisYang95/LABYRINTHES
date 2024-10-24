@@ -1,4 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie';
 import { ToastrService } from 'ngx-toastr';
 import { item } from 'src/app/core/models/item';
 import { BoutiqueService } from 'src/app/core/services/boutique.service';
@@ -23,12 +25,13 @@ export class BoutiqueComponent implements OnInit, OnDestroy {
   gifts: item[] = [];
   traps: item[] = [];
 
-  constructor(private toast: ToastrService, private boutiqueService: BoutiqueService) {
+  constructor(private toast: ToastrService, private boutiqueService: BoutiqueService, private root: Router, private cookieService: CookieService) {
     this.currentList = this.gifts;
     this.showGifts();
   }
 
   ngOnInit(): void {
+    if (this.cookieService.get("username") === undefined || sessionStorage.getItem("username") === null) this.root.navigateByUrl("/");
     this.boutiqueService.getAll().subscribe(res => {
       res.forEach(element => {
         if (element.type === "good") this.gifts.push(element);
