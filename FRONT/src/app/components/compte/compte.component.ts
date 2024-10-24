@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-compte',
@@ -6,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./compte.component.scss'] 
 })
 
-export class CompteComponent {
+export class CompteComponent implements OnInit {
   playerName = 'Abed'; 
   playerPseudo = 'AK47'; 
   playerXP = 50; 
@@ -14,6 +16,9 @@ export class CompteComponent {
   playerDislikes = 10;
   inventaireSize = 50;
 
-  constructor() {}
+  constructor(private cookieService: CookieService, private root: Router) {}
 
+  ngOnInit(): void {
+    if (this.cookieService.get("username") === undefined || sessionStorage.getItem("username") === null) this.root.navigateByUrl("/");
+  }
 }
