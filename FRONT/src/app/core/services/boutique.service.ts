@@ -11,7 +11,17 @@ export class BoutiqueService {
 
     constructor(private http: HttpClient) { }
 
+    // Récupérer tous les articles de la boutique
     getAll(): Observable<item[]> {
-        return this.http.get<item[]>(environment.baseUrl+'/shop', environment.httpOption);
+        return this.http.get<item[]>(`${environment.baseUrl}/shop`, environment.httpOption);
     }
+
+    // Méthode pour effectuer un achat
+  
+    buyItem(userId: number, objectId: number): Observable<any> {
+    // Construit l'URL avec l'ID de l'utilisateur et l'ID de l'objet
+    const url = `${environment.baseUrl}/shop/buy/${userId}/${objectId}`;
+    console.log('Calling URL:', url); 
+    return this.http.post<any>(url, environment.httpOption);
+  }
 }

@@ -1,4 +1,6 @@
 export interface user {
     id: number,
-    username: string
+    username: string,
+    good_points: number,
+    bad_points: number
 }

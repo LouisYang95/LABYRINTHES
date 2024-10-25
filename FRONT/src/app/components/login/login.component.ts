@@ -11,8 +11,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  id: string = ''; 
   username: string = '';
   password: string = '';
+  good_points: number  = 0;
+  bad_points: number = 0;
   rememberMe: boolean = false;
   errorMessage: string = '';
   cookiesOption: CookieOptions = {};
@@ -33,6 +36,9 @@ export class LoginComponent {
         this.toast.success("Connexion réussie", "Authentification");
         // Sauvegarder les informations si "Se souvenir de moi" est coché
         sessionStorage.setItem('username', this.username);
+        sessionStorage.setItem('id', (response.user.id).toString())
+        sessionStorage.setItem('good_points', (response.user.good_points).toString())
+        sessionStorage.setItem('bad_points', (response.user.bad_points).toString())
         if (this.rememberMe) {
           this.cookieService.put('username', this.username);
           this.cookieService.put('password', this.password);

@@ -22,6 +22,7 @@ export class BoutiqueComponent implements OnInit, OnDestroy {
   showCart = false;
   gifts: item[] = [];
   traps: item[] = [];
+  userId: any = sessionStorage.getItem('id');
 
   constructor(private toast: ToastrService, private boutiqueService: BoutiqueService) {
     this.currentList = this.gifts;
@@ -29,6 +30,7 @@ export class BoutiqueComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // Charger tous les articles
     this.boutiqueService.getAll().subscribe(res => {
       res.forEach(element => {
         if (element.type === "good") this.gifts.push(element);
@@ -36,6 +38,7 @@ export class BoutiqueComponent implements OnInit, OnDestroy {
       });
     });
   }
+
   // Afficher la liste des cadeaux
   showGifts() {
     this.currentList = this.gifts;
@@ -43,6 +46,7 @@ export class BoutiqueComponent implements OnInit, OnDestroy {
     this.listTitle = 'Liste des Cadeaux';
     this.showList = true;
   }
+
   // Afficher la liste des pièges
   showTraps() {
     this.currentList = this.traps;
@@ -50,38 +54,59 @@ export class BoutiqueComponent implements OnInit, OnDestroy {
     this.listTitle = 'Liste des Pièges';
     this.showList = true;
   }
-  // Acheter un article
+
+  // Acheter un article avec la requête API
   buyItem(item: any): void {
-    if (this.currentList === this.gifts) {
-      // Si c'est un cadeau, utiliser la monnaie des cadeaux
-      if (this.giftCurrency >= item.price) {
-        this.giftCurrency -= item.price;
-        this.cart.push(item);
-        this.toast.success(`${item.name} acheté avec succès !`);
-      } else this.toast.error("Vous n'avez pas assez de pièces pour les cadeaux !");
-    } else if (this.currentList === this.traps) {
-      // Si c'est un piège, utiliser la monnaie des pièges
-      if (this.trapCurrency >= item.price) {
-        this.trapCurrency -= item.price;
-        this.cart.push(item);
-        this.toast.success(`${item.name} acheté avec succès !`);
-      } else this.toast.error("Vous n'avez pas assez de pièces pour les pièges !");
-    }
+    const objectId = item.id;
+
+    // Appel à l'API pour effectuer l'achat
+    this.boutiqueService.buyItem(this.userId, objectId).subscribe(
+      response => {
+        // Si c'est un cadeau, utiliser la monnaie des cadeaux
+        if (this.currentList === this.gifts) {
+          if (this.giftCurrency >= item.price) {
+            this.giftCurrency -= item.price;
+            this.cart.push(item);
+            this.toast.success(`${item.name} acheté avec succès !`);
+          } else {
+            this.toast.error("Vous n'avez pas assez de pièces pour les cadeaux !");
+          }
+        }
+        // Si c'est un piège, utiliser la monnaie des pièges
+        else if (this.currentList === this.traps) {
+          if (this.trapCurrency >= item.price) {
+            this.trapCurrency -= item.price;
+            this.cart.push(item);
+            this.toast.success(`${item.name} acheté avec succès !`);
+          } else {
+            this.toast.error("Vous n'avez pas assez de pièces pour les pièges !");
+          }
+        }
+      },
+      error => {
+        // Gestion des erreurs
+        this.toast.error("Erreur lors de l'achat de l'article.");
+        console.error("Erreur d'achat:", error);
+      }
+    );
   }
-  // supprimer un article du panier
+
+  // Supprimer un article du panier
   removeItem(item: any): void {
     const index = this.cart.indexOf(item);
     if (index > -1) {
       this.cart.splice(index, 1);
-      // retour de la monnaie selon le type d'article
+      // Retour de la monnaie selon le type d'article
       if (this.gifts.includes(item)) this.giftCurrency += item.price;
       else if (this.traps.includes(item)) this.trapCurrency += item.price;
       this.toast.info(`${item.name} retiré du panier.`);
     }
   }
+
   // Activer ou désactiver l'affichage du panier
   toggleCartView(): void {
     this.showCart = !this.showCart;
   }
+
   ngOnDestroy(): void {}
 }

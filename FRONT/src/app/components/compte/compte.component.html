@@ -9,9 +9,12 @@
                 <mat-icon class="fs-1 w-100 h-100">local_mall</mat-icon>
             </div>
         </div>
-        <!-- Player -->
+
+        <!-- Player Information -->
         <div class="sous-menu col-md-6 col-12 ps-md-0 mb-4 mb-md-0">
             <div class="bg-white h-100 text-dark rounded-2 shadow px-3 overflow-auto scroll-bar">
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
                 <div class="row align-items-center pt-2 mb-2">
                     <div class="col-6 text-center">
                         <mat-icon class="logo-profil h-100 w-100">account_circle</mat-icon>
@@ -32,7 +35,7 @@
                     </div>
                 </div>
 
-                <!-- Section avec fond pour Likes/Dislikes -->
+                <!-- Likes and Dislikes Section -->
                 <div class="p-3 mb-2 rounded bg-gradient bg-info text-dark shadow-sm">
                     <div class="row my-4">
                         <div class="col-6 text-center">
@@ -45,7 +48,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Inventaire -->
         <div class="sous-menu col-md-6 col-12 pe-md-0">
             <div class="bg-white h-100 text-dark rounded-2 shadow py-2 px-3 row mx-auto overflow-auto scroll-bar">
@@ -54,6 +57,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+
+         <!-- Total pièces pour les cadeaux -->
+         <div class="d-flex justify-content-between mt-3">
+            <mat-icon>account_balance_wallet</mat-icon>
+            <p class="mb-0">Monnaie cadeaux : {{ giftCurrency }} pièces</p>
         </div>
     </div>
 </div>
