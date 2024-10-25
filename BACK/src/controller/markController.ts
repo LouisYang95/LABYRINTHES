@@ -154,7 +154,7 @@ export const createMark = async (req: Request, res: Response) => {
 };
 
 export const newInteractionForMark = async (req: Request, res: Response) => {
-    const { mark_id, user_id, interaction } = req.body;
+    const { mark_id, user_id, interaction_type } = req.body;
 
     try {
         const mark = await Mark.findByPk(mark_id);
@@ -167,7 +167,8 @@ export const newInteractionForMark = async (req: Request, res: Response) => {
             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
         }
 
-        if(!interaction || (interaction !== 'like' && interaction !== 'dislike')) {
+        console.log(interaction_type);
+        if(!interaction_type || (interaction_type !== 'like' && interaction_type !== 'dislike')) {
             return res.status(400).json({ message: 'Veuillez renseigner une interaction valide.' });
         }
 
@@ -189,7 +190,7 @@ export const newInteractionForMark = async (req: Request, res: Response) => {
         const newInteraction = await markInteraction.create({
             mark_id,
             user_id,
-            interaction
+            interaction_type
         });
 
         if (!newInteraction) {
