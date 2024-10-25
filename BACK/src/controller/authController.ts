@@ -37,60 +37,53 @@ export const createUser = async (req: Request, res: Response) => {
 };
 export const login = async (req: Request, res: Response) => {
     try {
-        const {username, password} = req.body;
+        const { username, password } = req.body;
 
         if (!username || !password) {
-            return res.status(400).json({message: "Username and password are required."});
+            return res.status(400).json({ message: "Username and password are required." });
         }
 
         const user = await User.findOne({
-            where: {
-                username: username,
-            },
+            where: { username }
         });
 
         if (!user) {
-            return res.status(400).json({message: "Invalid username or password."});
+            return res.status(400).json({ message: "Invalid username or password." });
+        }
+
+        const validPassword = await bcrypt.compare(password, <string>user.get("password")); // Ajoute await ici
+        if (!validPassword) {
+            return res.status(400).json({ message: "Invalid username or password." });
         }
 
         const userInfo = {
             id: user.get("id"),
-            username : user.get("username"),
+            username: user.get("username"),
             good_points: user.get("good_points"),
             bad_points: user.get("bad_points"),
-        }
-
-        const validPassword = bcrypt.compare(password, <string>user.get("password"));
-        if (!validPassword) {
-            return res.status(400).json({message: "Invalid username or password."});
-        }
-
+        };
 
         const actualLabyrinthVersion = await LabyrinthVersion.findOne({
-            where: {
-                is_active: true
-            },
+            where: { is_active: true }
         });
 
-        if(!actualLabyrinthVersion){
-            return res.status(500).json({message: "Error during user login, no labyrinth available"});
+        if (!actualLabyrinthVersion) {
+            return res.status(500).json({ message: "Error during user login, no labyrinth available" });
         }
 
         const labyrinthVersionInfo = {
             id: actualLabyrinthVersion.id,
             seed: actualLabyrinthVersion.seed
-        }
+        };
 
-
-        return res.status(200).json(
-            {message: "Login successful",
+        return res.status(200).json({
+            message: "Login successful",
             user: userInfo,
-            labyrinth_version: labyrinthVersionInfo});
+            labyrinth_version: labyrinthVersionInfo
+        });
 
     } catch (error) {
-        console.error("Error during user login :", error);
-        res
-            .status(500)
-            .json({ message: "Error during user login" });
+        console.error("Error during user login:", error);
+        res.status(500).json({ message: "Error during user login" });
     }
-}
+};
