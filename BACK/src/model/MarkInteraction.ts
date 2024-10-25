@@ -19,7 +19,7 @@ MarkInteraction.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    interaction: {
+    interaction_type: {
       type: DataTypes.ENUM("like", "dislike"),
       allowNull: false,
     },
