@@ -32,4 +32,7 @@ export class CompteComponent implements OnInit {
 
 }
 
+  ngOnInit(): void {
+    if (this.cookieService.get("username") === undefined || sessionStorage.getItem("username") === null) this.root.navigateByUrl("/");
+  }
 }
