@@ -193,6 +193,16 @@ export const newInteractionForMark = async (req: Request, res: Response) => {
             interaction_type
         });
 
+
+        //depending on the interaction type, we increment the good_points or bad_points of the user
+        if(interaction_type === 'like'){
+            await User.update({good_points: user.good_points + 1}, {where: {id: user_id}});
+        }
+
+        if(interaction_type === 'dislike'){
+            await User.update({bad_points: user.bad_points + 1}, {where: {id: user_id}});
+        }
+
         if (!newInteraction) {
             return res.status(500).json({ message: 'Erreur lors de la création de l\'interaction.' });
         }
