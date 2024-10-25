@@ -171,6 +171,21 @@ export const newInteractionForMark = async (req: Request, res: Response) => {
             return res.status(400).json({ message: 'Veuillez renseigner une interaction valide.' });
         }
 
+        if (mark.user_id === user_id) {
+            return res.status(400).json({ message: 'Vous ne pouvez pas interagir avec votre propre marque.' });
+        }
+
+        const alreadyInteracted = await markInteraction.findOne({
+            where: {
+                mark_id,
+                user_id
+            }
+        });
+
+        if (alreadyInteracted) {
+            return res.status(400).json({ message: 'Vous avez déjà interagi avec cette marque.' });
+        }
+
         const newInteraction = await markInteraction.create({
             mark_id,
             user_id,
