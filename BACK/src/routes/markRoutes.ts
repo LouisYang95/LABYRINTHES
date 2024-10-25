@@ -46,15 +46,65 @@ const router = express.Router();
  *                     type: string
  *                   user_id:
  *                     type: integer
- *                   position:
+ *                   labyrinth_version_id:
+ *                     type: integer
+ *                   labyrinth_level_id:
+ *                     type: integer
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                   updatedAt:
+ *                     type: string
+ *                     format: date-time
+ *                   MarkPosition:
  *                     type: object
  *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       mark_id:
+ *                         type: integer
+ *                       labyrinth_version_id:
+ *                         type: integer
  *                       position_x:
- *                         type: integer
+ *                         type: number
  *                       position_y:
- *                         type: integer
+ *                         type: number
  *                       position_z:
+ *                         type: number
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *                   MarkInteractions:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: integer
+ *                         mark_id:
+ *                           type: integer
+ *                         interaction_type:
+ *                           type: string
+ *                   User:
+ *                     type: object
+ *                     properties:
+ *                       id:
  *                         type: integer
+ *                       username:
+ *                         type: string
+ *                       good_points:
+ *                         type: integer
+ *                       bad_points:
+ *                         type: integer
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
  *       404:
  *         description: Aucune marque trouvée pour ce labyrinthe et niveau
  *       500:
