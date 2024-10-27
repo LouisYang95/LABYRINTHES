@@ -4,6 +4,7 @@ import LabyrinthLevel from "../model/LabyrinthLevel";
 import Objects from "../model/Objects";
 import User from "../model/User";
 import labyrinthLevel from "../model/LabyrinthLevel";
+import user from "../model/User";
 
 export const createTrap = async (req: Request, res: Response) => {
     try {
@@ -34,10 +35,6 @@ export const createTrap = async (req: Request, res: Response) => {
                 position_z
             }
         });
-
-        if (existingTrap) {
-            return res.status(400).json({ message: "Trap already exists." });
-        }
 
         const object = await Objects.findByPk(object_id);
 
@@ -121,5 +118,44 @@ export const getAllTrapsForLabyrinth = async (req: Request, res: Response) => {
     }catch (e){
         console.error("Error getting traps:", e);
         return res.status(500).json({ message: "Error getting traps" });
+    }
+}
+
+export const dieFromTrap = async (req: Request, res: Response) => {
+    try{
+        const {user_id, trap_id} = req.params;
+
+        if(!user_id || !trap_id){
+            return res.status(400).json({ message: "Missing parameters" });
+        }
+
+        const trap = await Traps.findByPk(trap_id);
+
+        if(!trap){
+            return res.status(404).json({ message: "Trap not found" });
+        }
+
+        const trap_owner_id = await User.findByPk(trap.user_id);
+        const user = await User.findByPk(user_id);
+        if (!user || !trap_owner_id) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        // @ts-ignore
+        if(user_id === trap_owner_id){
+            user.good_points -= 1;
+            user.bad_points -= 1;
+            await user.save();
+
+            return res.status(200).json({ message: "Died successfully" });
+        }
+
+        trap_owner_id.good_points += 1;
+        await trap_owner_id.save();
+
+        return res.status(200).json({ message: "Died successfully" });
+
+    }catch(e){
+        console.error("Error deleting trap:", e);
+        return res.status(500).json({ message: "Error deleting trap" });
     }
 }

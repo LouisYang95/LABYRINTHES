@@ -10,6 +10,7 @@ class Traps extends Model {
     public object_id!: number;
     public labyrinth_version_id!: number;
     public labyrinth_level_id!: number;
+    public user_id!: number;
     public position_x!: number;
     public position_y!: number;
     public position_z!: number;

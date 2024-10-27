@@ -1,5 +1,5 @@
 import express from "express";
-import { createTrap, deleteTrap, getAllTrapsForLabyrinth } from "../controller/trapController";
+import { createTrap, deleteTrap, getAllTrapsForLabyrinth, dieFromTrap } from "../controller/trapController";
 
 const router = express.Router();
 
@@ -168,8 +168,48 @@ const router = express.Router();
  *         description: Erreur serveur lors de la récupération des pièges
  */
 
+/**
+ * @swagger
+ * /trap/die/{user_id}/{trap_id}:
+ *   post:
+ *     summary: Enregistre la mort d'un utilisateur par un piège
+ *     description: Enregistre la mort d'un utilisateur par un piège spécifique. Ajuste les points du propriétaire du piège et de l'utilisateur affecté.
+ *     tags: [Trap]
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'utilisateur qui est mort
+ *       - in: path
+ *         name: trap_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID du piège ayant causé la mort
+ *     responses:
+ *       200:
+ *         description: Mort enregistrée avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Died successfully"
+ *       400:
+ *         description: Paramètres manquants
+ *       404:
+ *         description: Utilisateur ou piège non trouvé
+ *       500:
+ *         description: Erreur serveur lors de l'enregistrement de la mort
+ */
+
 router.post("/create", createTrap);
 router.delete("/:id", deleteTrap);
 router.get("/:labyrinth_version_id/:labyrinth_level", getAllTrapsForLabyrinth);
+router.post("/die/:user_id/:trap_id", dieFromTrap);
 
 export default router;
