@@ -20,6 +20,7 @@ App.use(cors());
 App.use('/mark', markRoutes);
 App.use('/user', userRoutes);
 App.use('/auth', authRoutes);
+App.use('/shop', shopRoutes);
 App.use('/top', topRoutes);
 App.use('/seed',seedRoutes);
 App.use('/trap', trapRoutes);

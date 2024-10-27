@@ -34,7 +34,7 @@ Inventory.belongsTo(User, {
     targetKey: "id"
 })
 
-Inventory.belongsTo(User, {
+Inventory.belongsTo(Objects, {
     foreignKey: "object_id",
     targetKey: "id"
 })
