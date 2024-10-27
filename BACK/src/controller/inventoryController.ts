@@ -10,7 +10,7 @@ export const getInventory = async (req: Request, res: Response) => {
         const inventory = await Inventory.findAll({
             where: { user_id },
             include: [
-                { model: Objects, attributes: ['name', 'description'], },
+                { model: Objects, attributes: ['name', 'description', 'image'], },
             ]
         });
 
