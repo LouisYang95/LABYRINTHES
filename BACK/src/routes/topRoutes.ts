@@ -33,9 +33,9 @@ const router = express.Router();
  *                   username:
  *                     type: string
  *                     description: Nom d'utilisateur du joueur
- *                   score:
+ *                   timer:
  *                     type: integer
- *                     description: Score total de l'utilisateur
+ *                     description: Timer total de l'utilisateur
  *       500:
  *         description: Erreur serveur lors de la récupération du classement
  */

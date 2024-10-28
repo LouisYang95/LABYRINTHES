@@ -1,5 +1,5 @@
 import express from "express";
-import { saveTimer } from "../controller/UserController";
+import {getUserInfo, saveTimer} from "../controller/UserController";
 import { getInventory, useObject } from "../controller/inventoryController";
 
 const router = express.Router();
@@ -135,8 +135,47 @@ const router = express.Router();
  *         description: Erreur serveur lors de la suppression de l'objet
  */
 
+/**
+ * @swagger
+ * /user/me/{user_id}:
+ *   get:
+ *     summary: Récupérer les informations de l'utilisateur connecté
+ *     description: Cette route permet de récupérer les informations d'un utilisateur spécifique sans retourner son mot de passe.
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'utilisateur dont on veut récupérer les informations
+ *     responses:
+ *       200:
+ *         description: Informations de l'utilisateur récupérées avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user_id:
+ *                   type: integer
+ *                   description: ID de l'utilisateur
+ *                 username:
+ *                   type: string
+ *                   description: Nom d'utilisateur
+ *                 email:
+ *                   type: string
+ *                   description: Adresse e-mail de l'utilisateur
+ *                 // Ajoutez d'autres propriétés de l'utilisateur selon votre modèle
+ *       404:
+ *         description: Utilisateur non trouvé
+ *       500:
+ *         description: Erreur serveur lors de la récupération des informations de l'utilisateur
+ */
+
 router.post('/:user_id/finish', saveTimer);
 router.get('/:user_id/inventory', getInventory);
 router.post('/:user_id/:inventory_id/delete', useObject);
+router.get('/me/:user_id', getUserInfo);
 
 export default router;

@@ -31,3 +31,23 @@ export const saveTimer = async (req: Request, res: Response) => {
         return res.status(500).json({ message: 'Erreur lors de la sauvegarde du timer.' });
     }
 }
+
+export const getUserInfo = async (req: Request, res: Response) => {
+    const { user_id } = req.params;
+
+    try {
+
+        const user = await User.findByPk(user_id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+        }
+
+        const { password, ...userWithoutPassword } = user.get();
+
+        return res.json(userWithoutPassword);
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Erreur lors de la récupération des informations de l\'utilisateur.' });
+    }
+}
