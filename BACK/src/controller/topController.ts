@@ -2,58 +2,64 @@ import {Request, Response} from "express";
 import Top from "../model/Top";
 import User from "../model/User";
 
-export const getTop = async (req: Request, res: Response) => {
+export const fetchTop = async () => {
     try {
         const top = await Top.findAll({
-            order: [
-                ['timer', 'ASC']
-            ],
+            order: [['timer', 'ASC']],
             limit: 10,
-            include: [
-                {
-                    model: User,
-                    attributes: ['username']
-                }
-            ]
+            include: [{ model: User, attributes: ['username'] }]
         });
 
-        return res.json(top);
+        return top.map((entry) => ({
+            id: entry.id,
+            timer: entry.timer,
+            User: {
+                username: entry.User.username
+            }
+        }));
+    } catch (error) {
+        console.error("Erreur lors de la récupération du top:", error);
+        throw error;
+    }
+};
+export const getTop = async () => {
+    try {
+        const top = await Top.findAll({
+            order: [['timer', 'ASC']],
+            limit: 10,
+            include: [{ model: User, attributes: ['username'] }]
+        });
+        return top;
     } catch (error) {
         console.error('Erreur lors de la récupération du top:', error);
-        return res.status(500).json({ message: 'Erreur lors de la récupération du top.' });
+        throw error;
     }
-}
+};
 
-export const getTopByGoodPoints = async (req: Request, res: Response) => {
+export const getTopByGoodPoints = async () => {
     try {
         const top = await User.findAll({
-            order: [
-                ['good_points', 'DESC']
-            ],
+            order: [['good_points', 'DESC']],
             limit: 10,
             attributes: ['username', 'good_points']
         });
-
-        return res.json(top);
+        return top;
     } catch (error) {
         console.error('Erreur lors de la récupération du top:', error);
-        return res.status(500).json({ message: 'Erreur lors de la récupération du top.' });
+        throw error;
     }
-}
+};
 
-export const getTopByBadPoints = async (req: Request, res: Response) => {
+export const getTopByBadPoints = async () => {
     try {
         const top = await User.findAll({
-            order: [
-                ['bad_points', 'DESC']
-            ],
+            order: [['bad_points', 'DESC']],
             limit: 10,
             attributes: ['username', 'bad_points']
         });
-
-        return res.json(top);
+        return top;
     } catch (error) {
         console.error('Erreur lors de la récupération du top:', error);
-        return res.status(500).json({ message: 'Erreur lors de la récupération du top.' });
+        throw error;
     }
-}
+};
