@@ -11,11 +11,8 @@ import { BoutiqueService } from 'src/app/core/services/boutique.service';
   styleUrls: ['./boutique.component.scss']
 })
 export class BoutiqueComponent implements OnInit, OnDestroy {
-  // Monnaie pour les cadeaux
-  giftCurrency: number = 1500;
-  // Monnaie pour les pièges
-  trapCurrency: number = 800;
-  // Liste des articles (cadeaux ou pièges)
+  goodCurrency: number = sessionStorage.getItem('good_points') as unknown as number;
+  trapCurrency: number = sessionStorage.getItem('bad_points') as unknown as number;
   currentList: any[] = [];
   currentmonnaie = 0;
   showList = false;
@@ -33,7 +30,8 @@ export class BoutiqueComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Charger tous les articles
-    if (this.cookieService.get("username") === undefined || sessionStorage.getItem("username") === null) this.root.navigateByUrl("/");
+    console.log(this.cookieService.get("username"), sessionStorage.getItem("username"));
+    if (this.cookieService.get("username") === undefined && sessionStorage.getItem("username") === null) this.root.navigateByUrl("/");
     this.boutiqueService.getAll().subscribe(res => {
       res.forEach(element => {
         if (element.type === "good") this.gifts.push(element);
@@ -67,8 +65,8 @@ export class BoutiqueComponent implements OnInit, OnDestroy {
       response => {
         // Si c'est un cadeau, utiliser la monnaie des cadeaux
         if (this.currentList === this.gifts) {
-          if (this.giftCurrency >= item.price) {
-            this.giftCurrency -= item.price;
+          if (this.goodCurrency >= item.price) {
+            this.goodCurrency -= item.price;
             this.cart.push(item);
             this.toast.success(`${item.name} acheté avec succès !`);
           } else {
@@ -99,8 +97,7 @@ export class BoutiqueComponent implements OnInit, OnDestroy {
     const index = this.cart.indexOf(item);
     if (index > -1) {
       this.cart.splice(index, 1);
-      // Retour de la monnaie selon le type d'article
-      if (this.gifts.includes(item)) this.giftCurrency += item.price;
+      if (this.gifts.includes(item)) this.goodCurrency += item.price;
       else if (this.traps.includes(item)) this.trapCurrency += item.price;
       this.toast.info(`${item.name} retiré du panier.`);
     }

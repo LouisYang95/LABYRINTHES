@@ -23,18 +23,12 @@
                         <h2 class="mb-0">{{ playerName }}<span class="align-top fs-6 ms-1 fst-italic">{{ playerPseudo }}</span></h2>
                     </div>
                 </div>
-                <div class="mb-4">
-                    <div class="d-flex justify-content-between">
-                        <mat-icon>stars</mat-icon>
-                        <p class="mb-0">XP : {{ playerXP }}</p>
-                    </div>
-                    <div class="progress mt-2 bg-dark">
-                        <div class="progress-bar bg-info" role="progressbar" [style.width]="playerXP + '%'" [attr.aria-valuenow]="playerXP" aria-valuemin="0" aria-valuemax="100">
-                            {{ playerXP }}%
-                        </div>
-                    </div>
-                </div>
-
+              <!-- Selected Item Display -->
+              <div *ngIf="selectedItem" class="p-3 my-3 rounded rounded-2 shadow bg-gradient bg-secondary text-white shadow-sm text-center">
+                <h3>Objet sélectionné</h3>
+                <h5>{{ selectedItem.name }}</h5>
+                <img [src]="'assets/img/' + selectedItem.image" alt="{{ selectedItem.name }}" class="selected-item-image" style="max-height: 100px; object-fit: contain;">
+              </div>
                 <!-- Likes and Dislikes Section -->
                 <div class="p-3 mb-2 rounded bg-gradient bg-info text-dark shadow-sm">
                     <div class="row my-4">
@@ -50,20 +44,35 @@
         </div>
 
         <!-- Inventaire -->
-        <div class="sous-menu col-md-6 col-12 pe-md-0">
-            <div class="bg-white h-100 text-dark rounded-2 shadow py-2 px-3 row mx-auto overflow-auto scroll-bar">
-                <div *ngFor="let i of [].constructor(50); let index = index;" class="col-4 px-1 my-1">
-                    <div class="inventaire-case">
-                    </div>
-                </div>
+      <div class="sous-menu col-md-6 col-12 pe-md-0">
+        <div class="bg-white h-100 text-dark rounded-2 shadow py-2 px-3 row mx-auto overflow-auto scroll-bar">
+          <h3 class="inventaire-title">Inventaire</h3>
+          <div *ngFor="let item of playerInventory" class="col-4 px-1 my-1 inventaire-item">
+            <div class="inventaire-case" [ngStyle]="{'background-image': 'url(assets/img/' + item.image + ')'}"></div>
+            <div class="inventaire-info text-center">
+              <h2>{{ item.name }}</h2>
+              <p>Quantité : {{ item.quantity }}</p>
+              <button class="btn btn-primary btn-sm mt-2" (click)="saveSelectedItem(item.id)">Sauvegarder</button>
             </div>
+          </div>
+
+
+
+          <!-- Alertes de succès et d'erreur -->
+          <div *ngIf="showSuccessAlert" class="alert alert-success mt-3">
+            Inventaire sauvegardé avec succès
+          </div>
+          <div *ngIf="showErrorAlert" class="alert alert-danger mt-3">
+            Erreur lors de la sauvegarde de l'inventaire
+          </div>
         </div>
+      </div>
 
 
          <!-- Total pièces pour les cadeaux -->
          <div class="d-flex justify-content-between mt-3">
             <mat-icon>account_balance_wallet</mat-icon>
-            <p class="mb-0">Monnaie cadeaux : {{ giftCurrency }} pièces</p>
+            <p class="mb-0">Monnaie cadeaux : {{ playerLikes }} pièces</p>
         </div>
     </div>
 </div>
