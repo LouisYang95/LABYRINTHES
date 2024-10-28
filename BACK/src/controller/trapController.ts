@@ -8,9 +8,9 @@ import user from "../model/User";
 
 export const createTrap = async (req: Request, res: Response) => {
     try {
-        const { object_id, labyrinth_version_id, labyrinth_level, position_x, position_y, position_z } = req.body;
+        const { object_id, user_id, labyrinth_version_id, labyrinth_level, position_x, position_y, position_z } = req.body;
 
-        if (!object_id || !labyrinth_version_id || !labyrinth_level) {
+        if (!object_id || !labyrinth_version_id || !labyrinth_level || !user_id) {
             return res.status(400).json({ message: "Missing parameters" });
         }
 
@@ -30,6 +30,7 @@ export const createTrap = async (req: Request, res: Response) => {
                 object_id,
                 labyrinth_version_id,
                 labyrinth_level_id: labyrinthLevel.id,
+                user_id,
                 position_x,
                 position_y,
                 position_z
@@ -46,6 +47,7 @@ export const createTrap = async (req: Request, res: Response) => {
             object_id,
             labyrinth_version_id,
             labyrinth_level_id: labyrinthLevel.id,
+            user_id,
             position_x,
             position_y,
             position_z
