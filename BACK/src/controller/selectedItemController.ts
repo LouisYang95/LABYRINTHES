@@ -12,7 +12,7 @@ export const getSelectedItem = async (req: Request, res: Response) => {
             include: [{
                 model: Inventory,
                 include: [
-                    { model: Objects, attributes: ['id'] },
+                    { model: Objects, attributes: ['id', 'name', 'image'] },
                 ]
             }]
         });
