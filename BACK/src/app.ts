@@ -10,6 +10,9 @@ import topRoutes from "./routes/topRoutes";
 import seedRoutes from "./routes/labyrinthRoute";
 import trapRoutes from "./routes/trapRoutes";
 import selectedItemRoute from "./routes/selectedItemRoute";
+import {WebSocketServer} from 'ws';
+import http from 'http';
+import {fetchTop, getTop, getTopByBadPoints, getTopByGoodPoints} from "./controller/topController";
 
 export const App = express();
 
@@ -29,3 +32,38 @@ App.use('/selected_item', selectedItemRoute);
 scheduleDailySeed()
 
 swaggerDocs(App);
+
+const wss = new WebSocketServer({ port: 3100 });
+
+wss.on('connection', (ws) => {
+    console.log('New client connected');
+    ws.on('message', (message) => {
+        console.log(`Received message: ${message}`);
+    });
+    ws.on('close', () => {
+        console.log('Client disconnected');
+    });
+});
+
+async function broadcastData(fetchData: () => Promise<any>, eventType: string) {
+    try {
+        const data = await fetchData();
+        const message = JSON.stringify({ eventType, data });
+        wss.clients.forEach(client => {
+            if (client.readyState === client.OPEN) {
+                client.send(message);
+            }
+        });
+    } catch (error) {
+        console.error(`Erreur lors de la diffusion de ${eventType}:`, error);
+    }
+}
+
+async function broadcastTopData() {
+    await broadcastData(() => getTop(), 'generalTop');
+    await broadcastData(() => getTopByGoodPoints(), 'goodPointsTop');
+    await broadcastData(() => getTopByBadPoints(), 'badPointsTop');
+}
+
+// Diffuser chaque classement toutes les 10 secondes
+setInterval(broadcastTopData, 10000);

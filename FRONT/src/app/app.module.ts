@@ -18,6 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieModule } from 'ngx-cookie';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {WebSocketService} from './core/services/websocket.service';
+
 
 LOAD_WASM().subscribe();
 
@@ -44,7 +46,7 @@ LOAD_WASM().subscribe();
     CookieModule.withOptions(),
     MatSidenavModule,
   ],
-  providers: [provideHttpClient(withInterceptorsFromDi())],
+  providers: [provideHttpClient(withInterceptorsFromDi()), WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

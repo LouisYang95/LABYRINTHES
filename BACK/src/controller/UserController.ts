@@ -5,11 +5,14 @@ import {getTop} from "./topController";
 
 
 export const saveTimer = async (req: Request, res: Response) => {
-    const { user_id, timer } = req.body;
+    const { user_id } = req.params;
+    const { timer } = req.body;
 
     try {
         const user = await User.findByPk(user_id);
+        console.log(user_id);
         if (!user) {
+            console.log(user);
             return res.status(404).json({ message: 'Utilisateur non trouvé.' });
         }
 
@@ -23,9 +26,7 @@ export const saveTimer = async (req: Request, res: Response) => {
             return res.status(500).json({ message: 'Erreur lors de la sauvegarde du timer.' });
         }
 
-        const newTop = await getTop(req, res);
-
-        return res.json({message: 'Timer sauvegardé', top: newTop});
+        return res.json({message: 'Timer sauvegardé'});
     } catch (error) {
         console.error('Erreur lors de la sauvegarde du timer:', error);
         return res.status(500).json({ message: 'Erreur lors de la sauvegarde du timer.' });
