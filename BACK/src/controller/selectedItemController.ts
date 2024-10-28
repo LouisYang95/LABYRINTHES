@@ -44,18 +44,21 @@ export const saveSelectedItem = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Vous ne possédez pas cet objet" });
         }
 
-        const newSelectedItem = await SelectedItem.create({
-            user_id,
-            inventory_id: inventory.id
-        });
+        let selectedItem = await SelectedItem.findOne({ where: { user_id } });
 
-
-        if (!newSelectedItem) {
-            return res.status(404).json({ message: 'Vous n\'avez pas de pièce sélectionnée.' });
+        if (selectedItem) {
+            selectedItem.inventory_id = inventory.id;
+            await selectedItem.save();
+            return res.status(200).json({ message: 'Pièce sélectionnée mise à jour avec succès.', selectedItem });
+        } else {
+            selectedItem = await SelectedItem.create({
+                user_id,
+                inventory_id: inventory.id
+            });
+            return res.status(201).json({ message: 'Pièce sélectionnée avec succès.', selectedItem });
         }
 
-        return res.status(200).json({ message: 'Pièce sélectionnée avec succès.', selectedItem: newSelectedItem });
-    }catch (error) {
+    } catch (error) {
         return res.status(500).json({ error: error });
     }
 }
