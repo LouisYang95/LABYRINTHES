@@ -64,7 +64,6 @@ export const saveSelectedItem = async (req: Request, res: Response) => {
 }
 
 export const useSelectedItem = async (req: Request, res: Response) => {
-
     try {
         const { user_id } = req.params;
 
@@ -76,12 +75,14 @@ export const useSelectedItem = async (req: Request, res: Response) => {
             return res.status(404).json({ error: "Pièce non trouvée ou utilisateur non autorisé." });
         }
 
+        await SelectedItem.destroy({where: {inventory_id: inventory?.get('id')}});
+
         await Inventory.destroy({where: {id: inventory?.get('id')}});
 
         return res.status(200).json({ message: "Pièce utilisée et retirée avec succès." });
 
     } catch (error) {
-        return res.status(500).json({ error: error });
+        return res.status(500).json({ error: error, message: "Erreur serveur lors de la suppression de l'objet" });
     }
 
 }
