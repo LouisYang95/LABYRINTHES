@@ -166,7 +166,6 @@ const router = express.Router();
  *                 email:
  *                   type: string
  *                   description: Adresse e-mail de l'utilisateur
- *                 // Ajoutez d'autres propriétés de l'utilisateur selon votre modèle
  *       404:
  *         description: Utilisateur non trouvé
  *       500:
