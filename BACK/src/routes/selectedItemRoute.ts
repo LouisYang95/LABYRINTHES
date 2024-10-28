@@ -1,5 +1,5 @@
 import express from "express";
-import { getSelectedItem, saveSelectedItem } from "../controller/selectedItemController";
+import {getSelectedItem, saveSelectedItem, useSelectedItem} from "../controller/selectedItemController";
 
 const router = express.Router();
 
@@ -107,7 +107,45 @@ const router = express.Router();
  *         description: Erreur serveur lors de l'enregistrement de l'objet sélectionné
  */
 
+/**
+ * @swagger
+ * /selected_item/use/{user_id}/{object_id}:
+ *   post:
+ *     summary: Utiliser un objet sélectionné par l'utilisateur
+ *     description: Cette route permet d'utiliser un objet sélectionné par l'utilisateur.
+ *     tags: [Selected Item]
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'utilisateur qui utilise l'objet
+ *       - in: path
+ *         name: object_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'objet sélectionné à utiliser
+ *     responses:
+ *       200:
+ *         description: Objet sélectionné utilisé avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Objet utilisé avec succès."
+ *       404:
+ *         description: Objet ou utilisateur non trouvé
+ *       500:
+ *         description: Erreur serveur lors de l'utilisation de l'objet sélectionné
+ */
+
 router.get("/:user_id", getSelectedItem);
 router.post("/save", saveSelectedItem);
+router.post("/use/:user_id/:object_id", useSelectedItem);
 
 export default router;
