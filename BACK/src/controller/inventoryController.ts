@@ -44,7 +44,7 @@ export const addObjectToInventory = async (req: Request, res: Response) => {
 
     try {
 
-        const { user_id, object_id } = req.body;
+        const { user_id, object_id } = req.params;
 
         const object = await Objects.findByPk(object_id);
 
@@ -56,6 +56,8 @@ export const addObjectToInventory = async (req: Request, res: Response) => {
             user_id,
             object_id,
         })
+
+        return res.status(200).json({ message: "Object added to inventory successfully." });
 
     } catch (error) {
         console.log("Error in addObjectToInventory: ", error);
