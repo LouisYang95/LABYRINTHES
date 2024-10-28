@@ -1,6 +1,6 @@
 import express from "express";
 import {getUserInfo, saveTimer} from "../controller/UserController";
-import { getInventory, useObject } from "../controller/inventoryController";
+import {addObjectToInventory, getInventory, useObject} from "../controller/inventoryController";
 
 const router = express.Router();
 
@@ -172,9 +172,76 @@ const router = express.Router();
  *         description: Erreur serveur lors de la récupération des informations de l'utilisateur
  */
 
+
+/**
+ * @swagger
+ * /user/{user_id}/add_item/{object_id}:
+ *   post:
+ *     summary: Ajouter un objet à l'inventaire de l'utilisateur
+ *     description: Cette route permet d'ajouter un objet spécifique à l'inventaire d'un utilisateur.
+ *     tags: [User]
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'utilisateur auquel l'objet sera ajouté
+ *       - in: path
+ *         name: object_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'objet à ajouter à l'inventaire
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - quantity
+ *             properties:
+ *               quantity:
+ *                 type: integer
+ *                 description: Quantité de l'objet à ajouter
+ *     responses:
+ *       200:
+ *         description: Objet ajouté à l'inventaire avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Objet ajouté à l'inventaire avec succès."
+ *                 inventory:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       item_id:
+ *                         type: integer
+ *                         description: ID de l'objet dans l'inventaire
+ *                       item_name:
+ *                         type: string
+ *                         description: Nom de l'objet
+ *                       quantity:
+ *                         type: integer
+ *                         description: Quantité de l'objet dans l'inventaire
+ *       400:
+ *         description: Requête incorrecte
+ *       404:
+ *         description: Utilisateur ou objet non trouvé
+ *       500:
+ *         description: Erreur serveur lors de l'ajout de l'objet
+ */
+
 router.post('/:user_id/finish', saveTimer);
 router.get('/:user_id/inventory', getInventory);
 router.post('/:user_id/:inventory_id/delete', useObject);
 router.get('/me/:user_id', getUserInfo);
+router.post("/add_item/:user_id/:object_id", addObjectToInventory);
 
 export default router;

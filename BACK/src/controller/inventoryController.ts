@@ -39,3 +39,26 @@ export const useObject = async (req: Request, res: Response) => {
         return res.status(500).json({error: error});
     }
 }
+
+export const addObjectToInventory = async (req: Request, res: Response) => {
+
+    try {
+
+        const { user_id, object_id } = req.body;
+
+        const object = await Objects.findByPk(object_id);
+
+        if (!object) {
+            return res.status(404).json({ message: "Object not found" });
+        }
+
+        await Inventory.create({
+            user_id,
+            object_id,
+        })
+
+    } catch (error) {
+        console.log("Error in addObjectToInventory: ", error);
+        return res.status(500).json({error: error});
+    }
+}
