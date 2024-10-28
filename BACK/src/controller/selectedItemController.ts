@@ -59,3 +59,26 @@ export const saveSelectedItem = async (req: Request, res: Response) => {
         return res.status(500).json({ error: error });
     }
 }
+
+export const useSelectedItem = async (req: Request, res: Response) => {
+
+    try {
+        const { user_id } = req.params;
+
+        const selectedItem = await SelectedItem.findOne({ where: { user_id } });
+
+        const inventory = await Inventory.findOne({ where: { id: selectedItem?.get('inventory_id') } });
+
+        if(!inventory) {
+            return res.status(404).json({ error: "Pièce non trouvée ou utilisateur non autorisé." });
+        }
+
+        await Inventory.destroy({where: {id: inventory?.get('id')}});
+
+        return res.status(200).json({ message: "Pièce utilisée et retirée avec succès." });
+
+    } catch (error) {
+        return res.status(500).json({ error: error });
+    }
+
+}
