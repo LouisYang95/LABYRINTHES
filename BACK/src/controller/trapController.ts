@@ -10,7 +10,7 @@ export const createTrap = async (req: Request, res: Response) => {
     try {
         const { object_id, labyrinth_version_id, labyrinth_level, position_x, position_y, position_z } = req.body;
 
-        if (!object_id || !labyrinth_version_id || !labyrinth_level || !position_x || !position_y || !position_z) {
+        if (!object_id || !labyrinth_version_id || !labyrinth_level) {
             return res.status(400).json({ message: "Missing parameters" });
         }
 
