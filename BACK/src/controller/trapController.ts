@@ -38,7 +38,7 @@ export const createTrap = async (req: Request, res: Response) => {
 
         const object = await Objects.findByPk(object_id);
 
-        if(object && object.type !== "trap"){
+        if(object && object.type !== "bad"){
             return res.status(400).json({ message: "Object is not a trap." });
         }
 
