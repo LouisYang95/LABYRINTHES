@@ -11,7 +11,7 @@ export interface Player {
   xp: number;
   likes: number;
   dislikes: number;
-  giftCurrency?: number; 
+  giftCurrency?: number;
 }
 
 @Injectable({
@@ -36,6 +36,17 @@ export class CompteService {
     getTotalGiftCurrency(playerId: number): Observable<number> {
       return this.http.get<number>(`${environment.baseUrl}/player/${playerId}/giftCurrency`, environment.httpOption);
     }
-  
-  
+
+    getInventory(playerId: number): Observable<any> {
+      return this.http.get<any>(`${environment.baseUrl}/user/${playerId}/inventory`, environment.httpOption);
+    }
+
+    getSelectedItem(playerId: string | null): Observable<any> {
+      return this.http.get<any>(`${environment.baseUrl}/selected_item/${playerId}`, environment.httpOption);
+    }
+
+    saveSelectedItem(body: { user_id: string | null; object_id: any }) {
+    console.log(body);
+      return this.http.post(`${environment.baseUrl}/selected_item/save`, { user_id: body.user_id, object_id: body.object_id }, environment.httpOption);
+    }
 }

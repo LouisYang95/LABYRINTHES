@@ -10,6 +10,7 @@ import { TopService } from 'src/app/core/services/top.service';
 })
 export class MainComponent implements OnInit, OnDestroy {
   // compte à rebours 5 minutes
+  hours: number = 0;
   minutes: number = 5;
   seconds: number = 0;
   countdownInterval: any;
@@ -46,13 +47,16 @@ export class MainComponent implements OnInit, OnDestroy {
   calculateTimeLeft(): void {
     const now = new Date().getTime();
     const timeDifference = this.targetTime.getTime() - now;
+
     if (timeDifference > 0) {
-      // Convertion
+      this.hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
       this.minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
       this.seconds = Math.floor((timeDifference / 1000) % 60);
-    } else this.resetCountdown();
-    // Si le temps est écoulé, réinitialition du labyrinthe
+    } else {
+      this.resetCountdown();
+    }
   }
+
   // Démarre le compte à rebours
   startCountdown(): void {
     this.calculateTimeLeft();
@@ -60,7 +64,7 @@ export class MainComponent implements OnInit, OnDestroy {
       this.calculateTimeLeft();
     }, 1000);
   }
-  // Réinitialition du compte à rebours à minuit du lendemain 
+  // Réinitialition du compte à rebours à minuit du lendemain
   resetCountdown(): void {
     clearInterval(this.countdownInterval);
     this.targetTime = this.getMidnight();

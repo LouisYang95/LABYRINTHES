@@ -5,7 +5,7 @@
     <div *ngIf="cart.length === 0" class="text-center my-4">Votre panier est vide.</div>
     <div *ngFor="let item of cart" class="d-flex justify-content-between align-items-center mb-2 p-2">
       <div class="d-flex align-items-center">
-        <img [src]="item.image" alt="{{ item.name }}" class="img-fluid me-2" style="max-height: 50px;">
+        <img [src]="'assets/img/' + item.image" alt="{{ item.name }}" class="img-fluid me-2" style="max-height: 50px;">
         <strong>{{ item.name }}</strong> - {{ item.price }} pièces
       </div>
       <button class="btn btn-danger" (click)="removeItem(item)">Retirer</button>
@@ -23,11 +23,12 @@
           <mat-icon class="fs-1 w-100 h-100">store</mat-icon>
         </div>
         <h1 class="col-6 text-center m-0 title">Boutique</h1>
-        <div class="col-3 text-center position-relative align-self-center">
-          <mat-icon class="fs-1 w-100 h-100" (click)="toggleCartView()">shopping_cart</mat-icon>
-          <span class="badge bg-danger position-absolute top-0 start-50 translate-middle">{{ cart.length }}</span>
-        </div>
+<!--        <div class="col-3 text-center position-relative align-self-center">-->
+<!--          <mat-icon class="fs-1 w-100 h-100" (click)="toggleCartView()">shopping_cart</mat-icon>-->
+<!--          <span class="badge bg-danger position-absolute top-0 start-50 translate-middle">{{ cart.length }}</span>-->
+<!--        </div>-->
       </div>
+
       <!-- Boutons pour afficher les cadeaux et pièges -->
       <div class="d-flex justify-content-center mb-4">
         <button (click)="showGifts()" class="btn btn-info text-white me-4">
@@ -37,19 +38,20 @@
           <mat-icon>thumb_down</mat-icon> Pièges
         </button>
       </div>
+
       <!-- Liste des Cadeaux ou Pièges -->
       <div *ngIf="showList" class="text-white rounded-top-5" [ngClass]="{'text-bg-info': currentmonnaie === 1, 'text-bg-danger': currentmonnaie === 2}">
         <!-- Affichage de la somme des pièces du joueur -->
-        <h4 *ngIf="currentmonnaie === 1" class="text-center pt-3">Monnaie Cadeaux : {{ giftCurrency}} pièces</h4>
-        <h4 *ngIf="currentmonnaie === 2" class="text-center pt-3">Monnaie Pièges : {{ trapCurrency }}pièces</h4>
+        <h4 *ngIf="currentmonnaie === 1" class="text-center pt-3">Monnaie Cadeaux : {{ goodCurrency }} pièces</h4>
+        <h4 *ngIf="currentmonnaie === 2" class="text-center pt-3">Monnaie Pièges : {{ trapCurrency }} pièces</h4>
         <div class="row mx-auto">
           <div *ngFor="let item of currentList" class="col-md-4 col-10">
-            <div class="col-9 mx-auto rounded-5 px-0 py-2 mb-4 text-bg-light text-center text-dark">
-              <img [src]="item.image" alt="{{ item.name }}" class="img-fluid" style="max-height: 150px;">
-              <h4>{{ item.name }}</h4>
-              <span class="fst-italic px-2 rounded-top-5 text-bg-light">{{ item.description }}</span>
-              <span class="d-block my-2 text-bg-dark text-warning">{{ item.price }} pièces</span>
-              <button class="btn btn-success" (click)="buyItem(item)">Acheter</button>
+            <div class="col-9 mx-auto rounded-5 px-0 py-2 mb-4 text-bg-light text-center text-dark d-flex flex-column align-items-center boutique-item">
+              <img [src]="'assets/img/' + item.image" alt="{{ item.name }}" class="img-fluid my-2 boutique-item-image">
+              <h5 class="m-0 boutique-item-name">{{ item.name }}</h5>
+              <p class="fst-italic px-2 text-muted boutique-item-description">{{ item.description }}</p>
+              <span class="d-block mt-auto text-bg-dark text-warning boutique-item-price">{{ item.price }} pièces</span>
+              <button class="btn btn-success mt-2" (click)="buyItem(item)">Acheter</button>
             </div>
           </div>
         </div>
