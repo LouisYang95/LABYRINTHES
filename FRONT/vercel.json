@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "dist/front/browser/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dist/front/browser/$1"
+    }
+  ]
+}
