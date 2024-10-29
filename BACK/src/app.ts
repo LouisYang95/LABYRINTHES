@@ -12,7 +12,11 @@ import trapRoutes from "./routes/trapRoutes";
 import selectedItemRoute from "./routes/selectedItemRoute";
 import {WebSocketServer} from 'ws';
 import http from 'http';
-import {fetchTop, getTop, getTopByBadPoints, getTopByGoodPoints} from "./controller/topController";
+import {
+    fetchGeneralTop,
+    fetchTopByBadPoints,
+    fetchTopByGoodPoints,
+} from "./controller/topController";
 
 export const App = express();
 
@@ -60,10 +64,9 @@ async function broadcastData(fetchData: () => Promise<any>, eventType: string) {
 }
 
 async function broadcastTopData() {
-    await broadcastData(() => getTop(), 'generalTop');
-    await broadcastData(() => getTopByGoodPoints(), 'goodPointsTop');
-    await broadcastData(() => getTopByBadPoints(), 'badPointsTop');
+    await broadcastData(fetchGeneralTop, 'generalTop');
+    await broadcastData(fetchTopByGoodPoints, 'goodPointsTop');
+    await broadcastData(fetchTopByBadPoints, 'badPointsTop');
 }
 
-// Diffuser chaque classement toutes les 10 secondes
 setInterval(broadcastTopData, 10000);

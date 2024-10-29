@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import {environment} from "../../../environment/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ export class WebSocketService {
   private subject = new Subject<any>();
 
   constructor() {
-    this.socket = new WebSocket('ws://localhost:3100');
+    // this.socket = new WebSocket('ws://localhost:3100');
+    this.socket = new WebSocket(environment.wsUrl);
 
     this.socket.onmessage = async (event) => {
       try {
