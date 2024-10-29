@@ -11,9 +11,6 @@ class Traps extends Model {
     public labyrinth_version_id!: number;
     public labyrinth_level_id!: number;
     public user_id!: number;
-    public position_x!: number;
-    public position_y!: number;
-    public position_z!: number;
 }
 
 Traps.init({
@@ -39,15 +36,15 @@ Traps.init({
         allowNull: false
     },
     position_x: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     position_y: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     position_z: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false
     }
 }, {
