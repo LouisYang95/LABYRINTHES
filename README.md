@@ -30,3 +30,12 @@
 - **Base de Données** : MySQL pour gérer les informations utilisateurs, les objets et les classements.
 - **Swagger** : Documentation des API REST.
 - **Unity** : Moteur de jeu utilisé pour le développement d'une extension immersive liée au projet.
+
+## Authors
+
+- [@Adrien](https://github.com/Adrien140401)
+- [@Abed](https://github.com/Massimiliano-HA)
+- [@Thomas](https://github.com/ThomasCast3)
+- [@Theo](https://github.com/Tony95Montana)
+- [@Florian](https://github.com/FlorianCohenJoly)
+- [@Louis](https://github.com/LouisYang95)
