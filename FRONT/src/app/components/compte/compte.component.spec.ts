@@ -26,6 +26,4 @@ export class CompteComponent {
     likes: 100,       
     dislikes: 20     
   };
-
-  constructor() {}
 }

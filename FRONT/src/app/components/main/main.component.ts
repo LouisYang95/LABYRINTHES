@@ -12,7 +12,7 @@ export class MainComponent implements OnInit, OnDestroy {
   // compte à rebours 5 minutes
   minutes = 5;
   seconds = 0;
-  countdownInterval: any;
+  countdownInterval = new NodeJS.Timeout;
   targetTime: Date;
   // Liste des winners
   generalScore: Score[] = [];

@@ -16,9 +16,9 @@ export class BoutiqueService {
         return this.http.get<item[]>(`${environment.baseUrl}/shop`, environment.httpOption);
     }
 
-    // Méthode pour effectuer un achat
+    // Méthode pour effectuerng un achat
   
-    buyItem(userId: number, objectId: number): Observable<any> {
+    buyItem(userId: string | null, objectId: number): Observable<any> {
     // Construit l'URL avec l'ID de l'utilisateur et l'ID de l'objet
     const url = `${environment.baseUrl}/shop/buy/${userId}/${objectId}`;
     console.log('Calling URL:', url); 
