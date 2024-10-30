@@ -10,8 +10,8 @@ import { TopService } from 'src/app/core/services/top.service';
 })
 export class MainComponent implements OnInit, OnDestroy {
   // compte à rebours 5 minutes
-  minutes: number = 5;
-  seconds: number = 0;
+  minutes = 5;
+  seconds = 0;
   countdownInterval: any;
   targetTime: Date;
   // Liste des winners

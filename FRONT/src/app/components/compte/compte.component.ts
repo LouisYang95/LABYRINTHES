@@ -9,11 +9,11 @@ import { CompteService, Player } from 'src/app/core/services/compte.service';
 export class CompteComponent implements OnInit {
   playerName: string | null = '';
   playerPseudo: string | null= '';
-  playerXP: number = 0;
+  playerXP = 0;
   playerLikes: string | null= "0";
   playerDislikes: string | null= "0";
-  errorMessage: string = '';
-  giftCurrency: number = 0;
+  errorMessage = '';
+  giftCurrency = 0;
 
   constructor(private compteService: CompteService) { }
 

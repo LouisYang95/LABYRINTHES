@@ -11,13 +11,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  id: string = ''; 
-  username: string = '';
-  password: string = '';
-  good_points: number  = 0;
-  bad_points: number = 0;
-  rememberMe: boolean = false;
-  errorMessage: string = '';
+  id = ''; 
+  username = '';
+  password = '';
+  good_points  = 0;
+  bad_points = 0;
+  rememberMe = false;
+  errorMessage = '';
   cookiesOption: CookieOptions = {};
 
   constructor(
@@ -57,7 +57,7 @@ export class LoginComponent {
   }
 
   initCookies(): void {
-    let expiry = new Date();
+    const expiry = new Date();
     expiry.setDate(expiry.getDate() + 365);
     this.cookiesOption.expires = expiry;
     this.cookiesOption.secure = true;

@@ -12,9 +12,9 @@ import { BoutiqueService } from 'src/app/core/services/boutique.service';
 })
 export class BoutiqueComponent implements OnInit, OnDestroy {
   // Monnaie pour les cadeaux
-  giftCurrency: number = 1500;
+  giftCurrency = 1500;
   // Monnaie pour les pièges
-  trapCurrency: number = 800;
+  trapCurrency = 800;
   // Liste des articles (cadeaux ou pièges)
   currentList: any[] = [];
   currentmonnaie = 0;
