@@ -7,11 +7,11 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  name: string = '';
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
-  successMessage: string = '';
+  name = '';
+  email = '';
+  password = '';
+  errorMessage = '';
+  successMessage = '';
 
   onRegister() {
     // Logique d'inscription ici

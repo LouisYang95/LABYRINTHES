@@ -30,7 +30,6 @@ export class CompteComponent implements OnInit {
     this.playerPseudo = sessionStorage.getItem('username');
     this.playerLikes = sessionStorage.getItem('good_points');
     this.playerDislikes = sessionStorage.getItem('bad_points');
-
     if (this.playerId) {
       this.compteService.getInventory(parseInt(this.playerId)).subscribe(
         (data: any) => {

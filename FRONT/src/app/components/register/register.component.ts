@@ -8,11 +8,11 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  username: string = '';
-  name: string = '';
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
+  username = '';
+  name = '';
+  email = '';
+  password = '';
+  errorMessage = '';
 
   // Injection router dans le constructeur
   constructor(private router: Router, private toast: ToastrService) {}
