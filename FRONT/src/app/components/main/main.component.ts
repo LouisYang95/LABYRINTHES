@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Score } from 'src/app/core/models/score';
 import { TopService } from 'src/app/core/services/top.service';
+import { WebSocketService } from 'src/app/core/services/websocket.service';
 
 @Component({
   selector: 'app-main',
@@ -9,25 +10,25 @@ import { TopService } from 'src/app/core/services/top.service';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
-  // compte à rebours 5 minutes
-  minutes = 5;
-  seconds = 0;
-  countdownInterval = new NodeJS.Timeout;
+  hours: number = 0;
+  minutes: number = 5;
+  seconds: number = 0;
+  countdownInterval: any;
   targetTime: Date;
-  // Liste des winners
   generalScore: Score[] = [];
   goodScore: Score[] = [];
   badScore: Score[] = [];
   subscription: Subscription[] = [];
+  public websocketSubscription: Subscription | undefined;
 
-  constructor(private topService: TopService) {
+  constructor(private topService: TopService, private websocketService: WebSocketService) {
     this.targetTime = this.getMidnight();
   }
 
   ngOnInit(): void {
-    // Initialisation du compte à rebours
+    // Initialize countdown
     this.startCountdown();
-    // Gestion de l'événement de défilement
+    // Manage scrolling event
     window.addEventListener('scroll', () => {
       const scrollHeight = document.documentElement.scrollHeight;
       const viewportHeight = window.innerHeight;
@@ -35,32 +36,51 @@ export class MainComponent implements OnInit, OnDestroy {
       document.body.style.setProperty('--scroll', value.toString());
     });
     this.getScores();
+
+    this.websocketSubscription = this.websocketService.getMessages().subscribe((message: any) => {
+      switch (message.eventType) {
+        case 'generalTop':
+          this.generalScore = message.data;
+          break;
+        case 'goodPointsTop':
+          this.goodScore = message.data;
+          break;
+        case 'badPointsTop':
+          this.badScore = message.data;
+          break;
+        default:
+          console.warn('Type d’événement inconnu reçu via WebSocket:', message.eventType);
+      }
+    });
   }
-  // heure de minuit au jours suivant
+  // Get midnight tomorrow
   getMidnight(): Date {
     const midnight = new Date();
     midnight.setHours(24, 0, 0, 0);
     return midnight;
   }
-  // temps restant jusqu'à minuit
+  // Calculate the time left until midnight
   calculateTimeLeft(): void {
     const now = new Date().getTime();
     const timeDifference = this.targetTime.getTime() - now;
+
     if (timeDifference > 0) {
-      // Convertion
+      this.hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
       this.minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
       this.seconds = Math.floor((timeDifference / 1000) % 60);
-    } else this.resetCountdown();
-    // Si le temps est écoulé, réinitialition du labyrinthe
+    } else {
+      this.resetCountdown();
+    }
   }
-  // Démarre le compte à rebours
+
+  // Start countdown
   startCountdown(): void {
     this.calculateTimeLeft();
     this.countdownInterval = setInterval(() => {
       this.calculateTimeLeft();
     }, 1000);
   }
-  // Réinitialition du compte à rebours à minuit du lendemain 
+  // Reset countdown to midnight tomorrow
   resetCountdown(): void {
     clearInterval(this.countdownInterval);
     this.targetTime = this.getMidnight();
@@ -77,7 +97,7 @@ export class MainComponent implements OnInit, OnDestroy {
       element.unsubscribe();
     });
     clearInterval(this.countdownInterval);
-    // Supprime l'événement de défilement
+    // Remove scrolling event
     window.removeEventListener('scroll', () => { });
   }
 }

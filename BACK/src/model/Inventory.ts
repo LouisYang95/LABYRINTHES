@@ -1,8 +1,13 @@
 import {DataTypes, Model} from "sequelize";
 import sequelize from "../config/database";
 import User from "./User";
+import Objects from "./Objects";
 
-class Inventory extends Model {}
+class Inventory extends Model {
+    public id!: number;
+    public user_id!: number;
+    public object_id!: number;
+}
 
 Inventory.init({
     id: {
@@ -17,10 +22,6 @@ Inventory.init({
     object_id: {
         type: DataTypes.INTEGER,
         allowNull: false
-    },
-    labyrinth_version_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
     }
 }, {
     sequelize,
@@ -30,6 +31,11 @@ Inventory.init({
 
 Inventory.belongsTo(User, {
     foreignKey: "user_id",
+    targetKey: "id"
+})
+
+Inventory.belongsTo(Objects, {
+    foreignKey: "object_id",
     targetKey: "id"
 })
 

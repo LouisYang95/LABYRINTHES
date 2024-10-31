@@ -5,7 +5,7 @@
     <!-- Compte à rebours -->
     <div class="text-center">
         <h2 class="text-warning">Compte à rebours du Labyrinthe</h2>
-        <h3 class="text-danger">{{ minutes }}:{{ seconds | number: '2.0' }}</h3>
+        <h3 class="text-danger">{{ hours }}:{{ minutes }}:{{ seconds | number: '2.0' }}</h3>
         <!--  <button class="btn btn-warning mt-3" (click)="resetCountdown()">Reset Labyrinthe</button> -->
     </div>
     <div class="bloc col-md-8 mt-5 p-0 mx-md-auto col-12">
@@ -21,8 +21,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let score of generalScore">
-                        <td>{{ score.username }}</td>
-                        <td>{{ score.score }}</td>
+                        <td>{{ score.User.username  }}</td>
+                        <td>{{ score.timer}} </td>
                     </tr>
                 </tbody>
             </table>
@@ -37,7 +37,7 @@
                 <tbody>
                     <tr *ngFor="let score of goodScore">
                         <td>{{ score.username }}</td>
-                        <td>{{ score.score }}</td>
+                        <td>{{ score.good_points }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -52,7 +52,7 @@
                 <tbody>
                     <tr *ngFor="let score of badScore">
                         <td>{{ score.username }}</td>
-                        <td>{{ score.score }}</td>
+                        <td>{{ score.bad_points }}</td>
                     </tr>
                 </tbody>
             </table>

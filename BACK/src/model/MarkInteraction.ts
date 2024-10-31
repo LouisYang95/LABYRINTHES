@@ -1,8 +1,6 @@
 import {DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import MarkPosition from "./MarkPosition";
 import User from "./User";
-import Mark from "./Mark";
 
 class MarkInteraction extends Model {}
 
@@ -21,7 +19,7 @@ MarkInteraction.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    interaction: {
+    interaction_type: {
       type: DataTypes.ENUM("like", "dislike"),
       allowNull: false,
     },

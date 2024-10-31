@@ -2,8 +2,16 @@ import {DataTypes, Model} from "sequelize";
 import sequelize from "../config/database";
 import Objects from "./Objects";
 import LabyrinthVersion from "./LabyrinthVersion";
+import LabyrinthLevel from "./LabyrinthLevel";
+import User from "./User";
 
-class Traps extends Model {}
+class Traps extends Model {
+    public id!: number;
+    public object_id!: number;
+    public labyrinth_version_id!: number;
+    public labyrinth_level_id!: number;
+    public user_id!: number;
+}
 
 Traps.init({
     id: {
@@ -19,16 +27,24 @@ Traps.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    position_x: {
+    labyrinth_level_id:{
         type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    position_x: {
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     position_y: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     position_z: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
         allowNull: false
     }
 }, {
@@ -44,6 +60,16 @@ Traps.belongsTo(Objects, {
 
 Traps.belongsTo(LabyrinthVersion, {
     foreignKey: 'labyrinth_version_id',
+    targetKey: 'id'
+})
+
+Traps.belongsTo(LabyrinthLevel,{
+    foreignKey: 'labyrinth_level_id',
+    targetKey: 'id'
+})
+
+Traps.belongsTo(User,{
+    foreignKey: 'user_id',
     targetKey: 'id'
 })
 

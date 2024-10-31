@@ -2,7 +2,12 @@ import {DataTypes, Model} from "sequelize";
 import sequelize from "../config/database";
 import User from "./User";
 
-class Top extends Model {}
+class Top extends Model {
+    public id!: number;
+    public user_id!: number;
+    public timer!: number;
+    public User!: User;
+}
 
 Top.init({
     id: {
@@ -15,10 +20,6 @@ Top.init({
         allowNull: false
     },
     timer: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    number: {
         type: DataTypes.INTEGER,
         allowNull: false
     }

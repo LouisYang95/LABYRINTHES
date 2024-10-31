@@ -4,8 +4,15 @@ import User from "./User";
 import LabyrinthVersion from "./LabyrinthVersion";
 import MarkPosition from "./MarkPosition";
 import MarkInteraction from "./MarkInteraction";
+import LabyrinthLevel from "./LabyrinthLevel";
 
-class Mark extends Model {}
+class Mark extends Model {
+    public id!: number;
+    public user_id!: number;
+    public labyrinth_version_id!: number;
+    public labyrinth_level_id!: number;
+    public text!: string;
+}
 
 Mark.init(
   {
@@ -21,6 +28,10 @@ Mark.init(
     labyrinth_version_id:{
       type: DataTypes.INTEGER,
         allowNull: false
+    },
+    labyrinth_level_id:{
+      type: DataTypes.INTEGER,
+      allowNull:false
     },
     text: {
       type: DataTypes.STRING,
@@ -42,6 +53,11 @@ Mark.belongsTo(User, {
 Mark.belongsTo(LabyrinthVersion,{
   foreignKey: "labyrinth_version_id",
   targetKey: "id",
+})
+
+Mark.belongsTo(LabyrinthLevel,{
+    foreignKey: "labyrinth_level_id",
+    targetKey: "id",
 })
 
 Mark.hasOne(MarkPosition, {
